@@ -1,14 +1,17 @@
 import React from "react";
 import './App.css';
-import TeamList from "./components/team-list";
+import Navbar from "./components/navbar";
+import Main from "./components/main";
+import {BrowserRouter as Router} from "react-router-dom";
 
 function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-          <TeamList/>
-      </header>
+        <Router>
+            <Navbar/>
+            <Main/>
+        </Router>
     </div>
   );
 }

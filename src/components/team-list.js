@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import {Link} from 'react-router-dom'
 
 function TeamList() {
 
@@ -24,7 +25,9 @@ function TeamList() {
   return (
     <div>
         {teams && teams.map(team => {
-            return <p>{team.name}: {team.description}</p>
+            return <Link to={`/details/team/${team.id}`}>
+                <h2 key={team.id}>{team.name}: {team.description}</h2>
+            </Link>
         })}
     </div>
   );
