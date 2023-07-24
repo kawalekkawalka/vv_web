@@ -11,7 +11,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
-import {useAuth} from "../hooks/useAuth";
+import {useAuth} from "../../hooks/useAuth";
+import {useNavigate} from "react-router-dom";
 
 const pages = ['Ligi(not implemented)', 'Zespoły', 'Zawodnicy'];
 const settings = ['Statystyki', 'Zespoły'];
@@ -20,9 +21,11 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const {authData, setAuth} = useAuth();
+  const navigate = useNavigate();
 
   const logout = () => {
       setAuth(null);
+      navigate("/");
   }
 
   const handleOpenNavMenu = (event) => {
@@ -78,7 +81,7 @@ function Navbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Avatar" src={"http://localhost:8000" + authData.user.player.photo} />
               </IconButton>
             </Tooltip>
             <Menu

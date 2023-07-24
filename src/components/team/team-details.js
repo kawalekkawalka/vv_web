@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Link, useParams} from 'react-router-dom';
-import {useFetchTeam} from "../hooks/fetch-team";
+import {useFetchTeam} from "../../hooks/fetch-team";
 function TeamDetails() {
 
     const { id } = useParams();
