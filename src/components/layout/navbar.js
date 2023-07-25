@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
 import {useAuth} from "../../hooks/useAuth";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const pages = ['Ligi(not implemented)', 'Zespoły', 'Zawodnicy'];
 const settings = ['Statystyki', 'Zespoły'];
@@ -100,6 +100,9 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+                <MenuItem >
+                  <Link to={'/account'}>Moje konto</Link>
+                </MenuItem>
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
