@@ -1,3 +1,5 @@
+import { status} from "../utils";
+
 export function auth(credentials){
     return fetch('http://localhost:8000/api/authenticate/', {
         method: 'POST',
@@ -5,23 +7,18 @@ export function auth(credentials){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(credentials)
-    }).then(resp => resp.json())
-        .catch( e => {
-            console.log(e);
-        })
+    }).then(status).catch( e => {console.log(e)})
 }
 
-export function changePassword(userData, userId){
+export function changePassword(userData, userId, token){
     return fetch(`http://localhost:8000/api/users/${userId}/change_pass/`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
         },
         body: JSON.stringify(userData)
-    }).then(resp => resp.json())
-        .catch( e => {
-            console.log(e);
-        })
+    }).then(status).catch( e => {console.log(e)})
 }
 
 export function register(userData){
@@ -31,18 +28,12 @@ export function register(userData){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(userData)
-    }).then(resp => resp.json())
-        .catch( e => {
-            console.log(e);
-        })
+    }).then(status).catch( e => {console.log(e)})
 }
 
 export function uploadAvatar(playerId, data){
     return fetch(`http://localhost:8000/api/players/${playerId}/`, {
         method: 'PUT',
         body: data
-    }).then(resp => resp.json())
-        .catch( e => {
-            console.log(e);
-        })
+    }).then(status).catch( e => {console.log(e)})
 }

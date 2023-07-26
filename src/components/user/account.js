@@ -5,7 +5,7 @@ import {auth, changePassword, register, uploadAvatar} from "../../services/user_
 import {useAuth} from "../../hooks/useAuth";
 import IconButton from "@mui/material/IconButton";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-import MenuItem from "@mui/material/MenuItem";
+import {NotificationManager} from "react-notifications";
 
 function Account() {
 
@@ -28,7 +28,14 @@ function Account() {
     const handleChangePassword = async e => {
         e.preventDefault();
         if(passMatch()){
-            await changePassword({old_password: oldPassword, new_password: password}, authData.user.id);
+            const passData = await changePassword(
+                {old_password: oldPassword, new_password: password},
+                authData.user.id, authData.token);
+            if(passData){
+                NotificationManager.success("Hasło zostało pomyślnie zmienione");
+            }
+        }else {
+            NotificationManager.warning("Hasła nie są identyczne");
         }
     }
 

@@ -7,6 +7,7 @@ import {auth, register} from "../../services/user_services";
 import {useAuth} from "../../hooks/useAuth";
 import {Link, useNavigate} from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
+import {NotificationManager} from "react-notifications";
 
 function Login() {
 
@@ -35,6 +36,7 @@ function Login() {
                 const data = await auth({username, password});
                 setAuth(data);
                 navigate("/account");
+                NotificationManager.success("Twoje konto zostało pomyślnie utworzone");
             }
         }
     }
