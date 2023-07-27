@@ -43,7 +43,7 @@ function Account() {
         e.preventDefault();
         const uploadData = new FormData();
         uploadData.append('photo', photo, photo.name)
-        const playerData = await uploadAvatar(authData.user.player.id, uploadData);
+        const playerData = await uploadAvatar(authData.user.player.id, uploadData, authData.token);
     }
 
 

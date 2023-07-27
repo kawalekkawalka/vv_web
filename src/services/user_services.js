@@ -31,9 +31,12 @@ export function register(userData){
     }).then(status).catch( e => {console.log(e)})
 }
 
-export function uploadAvatar(playerId, data){
+export function uploadAvatar(playerId, data, token){
     return fetch(`http://localhost:8000/api/players/${playerId}/`, {
         method: 'PUT',
+        headers: {
+            'Authorization': `Token ${token}`
+        },
         body: data
     }).then(status).catch( e => {console.log(e)})
 }
