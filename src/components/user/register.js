@@ -8,6 +8,7 @@ import {useAuth} from "../../hooks/useAuth";
 import {Link, useNavigate} from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import {NotificationManager} from "react-notifications";
+import {FormSelect, FormTextField} from "../layout/elements";
 
 function Login() {
 
@@ -56,151 +57,81 @@ function Login() {
               <h1>Uzupełnij dane</h1>
               <form onSubmit={handleSubmit}>
               <div>
-                  <FormControl sx={{ m: 1, width: '25ch',} } variant="outlined" >
-                      <InputLabel htmlFor="login" >Nazwa użytkownika</InputLabel>
-                      <OutlinedInput
-                        id="Login"
-                        endAdornment={
-                          <InputAdornment position="end" >
-                          </InputAdornment>
-                        }
-                        label="Login"
-                        onChange={ e => setUsername(e.target.value)}
-                      />
-                  </FormControl>
-                  </div>
+                  <FormTextField label="Nazwa użytkownika" onChange={ e => setUsername(e.target.value)}/>
+              </div>
               <div>
-                    <FormControl sx={{ m: 1, width: '25ch'}} variant="outlined">
-                      <InputLabel htmlFor="password">Hasło</InputLabel>
-                      <OutlinedInput
-                        id="password"
-                        type={showPassword ? 'text' : 'password'}
-                        onChange={ e => setPassword(e.target.value)}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                        label="Password"
-                      />
-                    </FormControl>
+                  <FormTextField label="Hasło" onChange={ e => setPassword(e.target.value) }
+                                 type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          sx={{ color: 'white' }}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                        ),
+                    }}
+                  />
+              </div>
+                  <div>
+                    <FormTextField label="Powtórz hasło" onChange={ e => setPassword2(e.target.value) }
+                                 type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          sx={{ color: 'white' }}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                        ),
+                    }}
+                  />
                   </div>
                   <div>
-                    <FormControl sx={{ m: 1, width: '25ch'}} variant="outlined">
-                      <InputLabel htmlFor="password2">Powtórz hasło</InputLabel>
-                      <OutlinedInput
-                        id="password2"
-                        type={showPassword ? 'text' : 'password'}
-                        onChange={ e => setPassword2(e.target.value)}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                        label="Password2"
-                      />
-                    </FormControl>
+                    <FormTextField label="Imię" onChange={ e => setName(e.target.value)}/>
                   </div>
                   <div>
-                  <FormControl sx={{ m: 1, width: '25ch',} } variant="outlined" >
-                      <InputLabel htmlFor="name" >Imię</InputLabel>
-                      <OutlinedInput
-                        id="name"
-                        endAdornment={
-                          <InputAdornment position="end" >
-                          </InputAdornment>
-                        }
-                        label="Name"
-                        onChange={ e => setName(e.target.value)}
-                      />
-                  </FormControl>
+                    <FormTextField label="Nazwisko" onChange={ e => setSurname(e.target.value)}/>
                   </div>
                   <div>
-                  <FormControl sx={{ m: 1, width: '25ch',} } variant="outlined" >
-                      <InputLabel htmlFor="surname" >Nazwisko</InputLabel>
-                      <OutlinedInput
-                        id="surname"
-                        endAdornment={
-                          <InputAdornment position="end" >
-                          </InputAdornment>
-                        }
-                        label="Surname"
-                        onChange={ e => setSurname(e.target.value)}
-                      />
-                  </FormControl>
+                    <FormTextField label="Email" onChange={ e => setEmail(e.target.value)} type="email"/>
                   </div>
                   <div>
-                  <FormControl sx={{ m: 1, width: '25ch',} } variant="outlined" >
-                      <InputLabel htmlFor="email" >Email</InputLabel>
-                      <OutlinedInput
-                        id="Email"
-                        endAdornment={
-                          <InputAdornment position="end" >
-                          </InputAdornment>
-                        }
-                        label="Email"
-                        onChange={ e => setEmail(e.target.value)}
-                      />
-                  </FormControl>
+                    <FormTextField label="Rok urodzenia" onChange={ e => setYear(e.target.value)}/>
                   </div>
                   <div>
-                  <FormControl sx={{ m: 1, width: '25ch',} } variant="outlined" >
-                      <InputLabel htmlFor="year" >Rok urodzenia</InputLabel>
-                      <OutlinedInput
-                        id="year"
-                        endAdornment={
-                          <InputAdornment position="end" >
-                          </InputAdornment>
-                        }
-                        label="Year"
-                        onChange={ e => setYear(e.target.value)}
-                      />
-                  </FormControl>
+                    <FormTextField label="Wzrost" onChange={ e => setHeight(e.target.value)}/>
                   </div>
                   <div>
-                  <FormControl sx={{ m: 1, width: '25ch',} } variant="outlined" >
-                      <InputLabel htmlFor="height" >Wzrost</InputLabel>
-                      <OutlinedInput
-                        id="height"
-                        endAdornment={
-                          <InputAdornment position="end" >
-                          </InputAdornment>
-                        }
-                        label="Height"
-                        onChange={ e => setHeight(e.target.value)}
-                      />
-                  </FormControl >
-                  </div>
-                  <div>
-                      <FormControl sx={{ m: 1, width: '25ch',} }>
-                          <InputLabel id="position">Pozycja</InputLabel>
-                          <Select
-                            id="position"
+                      <FormControl focused={false}>
+                          <InputLabel id="position-label">
+                            Pozycja
+                          </InputLabel>
+                          <FormSelect // Use the custom styled component here
+                            labelId="position-label"
                             value={position}
-                            label="Age"
-                            onChange={ e => setPosition(e.target.value)}
+                            label="Pozycja"
+                            onChange={(e) => setPosition(e.target.value)}
                           >
-                            <MenuItem value={"L"}>Libero</MenuItem>
-                            <MenuItem value={"S"}>Rozgrywający</MenuItem>
-                            <MenuItem value={"OH"}>Przyjmujący</MenuItem>
-                            <MenuItem value={"OP"}>Atakujący</MenuItem>
-                            <MenuItem value={"MB"}>Środkowy</MenuItem>
-                          </Select>
-                      </FormControl>
+                            <MenuItem value={'L'}>Libero</MenuItem>
+                            <MenuItem value={'S'}>Rozgrywający</MenuItem>
+                            <MenuItem value={'OH'}>Przyjmujący</MenuItem>
+                            <MenuItem value={'OP'}>Atakujący</MenuItem>
+                            <MenuItem value={'MB'}>Środkowy</MenuItem>
+                          </FormSelect>
+                        </FormControl>
                   </div>
 
               <Button color="primary" variant="contained" type="submit" sx={{ m: 1, width: '25ch' }}>

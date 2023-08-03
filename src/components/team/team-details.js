@@ -63,11 +63,12 @@ function TeamDetails() {
                         } )}
                   </div>
                   <br/>
-                  {inTeam ?
+                  {authData && (
+                      inTeam ?
                       <Button color="primary" variant="contained" onClick={handleLeaveTeam}>Opuść zespół</Button>
                   :
                       <Button color="primary" variant="contained" onClick={handleJoinTeam}>Dołącz do zespołu</Button>
-                  }
+                  )}
                   <hr/>
                   <Comments comments={team.comments} objectId={team.id} contentType={'team'}/>
               </React.Fragment>

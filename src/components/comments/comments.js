@@ -37,7 +37,6 @@ export default function Comments({comments, objectId, contentType}) {
     const handleSetComment = async () => {
         const comment = await sendComment(authData.user.id, newComment, contentType, objectId, authData.token);
         if (comment){
-                console.log("dobrze")
                 setNewComment('');
                 actualComments.push(comment.result);
             }
@@ -55,28 +54,33 @@ export default function Comments({comments, objectId, contentType}) {
     }
 
     return (
-        <div >
-            <TextField label={"Dodaj komentarz"} multiline fullWidth rows={4} variant="outlined" value={newComment}
-            onChange={ evt => setNewComment(evt.target.value)}/>
-            <Button onClick={handleSetComment} color="primary" variant="contained" disabled={!newComment}>
-                Dodaj komentarz
-            </Button>
-
+        <div>
+            {authData &&
+                <div>
+                    <TextField label={"Dodaj komentarz"} multiline fullWidth rows={4} variant="outlined"
+                               value={newComment} onChange={evt => setNewComment(evt.target.value)}/>
+                    <Button onClick={handleSetComment} color="primary" variant="contained" disabled={!newComment}>
+                        Dodaj komentarz
+                    </Button>
+                </div>
+            }
             <h2>Komentarze:</h2>
-            {actualComments.map ( comment => {
-            return <div className={classes.comments} key={comment.id}>
-                { isCommentOwner(comment.user.id) ?
-                    <IconButton aria-label="delete comment" onClick={() => handleDeleteComment(comment.id)}>
-                        <RemoveCircleIcon/>
-                    </IconButton>
-                    :(
-                    <div className={classes.fillerIcon}/>
-          )}
-                <Player player={comment.user.player} />
-                <p>{comment.description}</p>
-            </div>
+            {actualComments.map(comment => {
+                return <div className={classes.comments} key={comment.id}>
+                    {authData && isCommentOwner(comment.user.id) ?
+                        <IconButton aria-label="delete comment" onClick={() => handleDeleteComment(comment.id)}>
+                            <RemoveCircleIcon/>
+                        </IconButton>
+                        : (
+                            <div className={classes.fillerIcon}/>
+                        )}
+                    <Player player={comment.user.player}/>
+                    <p>{comment.description}</p>
+                </div>
             })}
+
         </div>
+
     )
 }
 

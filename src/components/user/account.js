@@ -6,6 +6,7 @@ import {useAuth} from "../../hooks/useAuth";
 import IconButton from "@mui/material/IconButton";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {NotificationManager} from "react-notifications";
+import {FormTextField} from "../layout/elements";
 
 function Account() {
 
@@ -66,73 +67,64 @@ function Account() {
               <p>Zmień hasło:</p>
               <form onSubmit={handleChangePassword}>
               <div>
-                    <FormControl sx={{ m: 1, width: '25ch'}} variant="outlined">
-                      <InputLabel htmlFor="old_password">Stare hasło</InputLabel>
-                      <OutlinedInput
-                        id="old_password"
-                        type={showPassword ? 'text' : 'password'}
-                        onChange={ e => setOldPassword(e.target.value)}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                        label="Password"
-                      />
-                    </FormControl>
-                  </div>
+                  <FormTextField label="Stare hasło" onChange={ e => setOldPassword(e.target.value) }
+                                 type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          sx={{ color: 'white' }}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                        ),
+                    }}
+                  />
+              </div>
               <div>
-                    <FormControl sx={{ m: 1, width: '25ch'}} variant="outlined">
-                      <InputLabel htmlFor="password">Nowe hasło</InputLabel>
-                      <OutlinedInput
-                        id="password"
-                        type={showPassword ? 'text' : 'password'}
-                        onChange={ e => setPassword(e.target.value)}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                        label="Password"
-                      />
-                    </FormControl>
-                  </div>
+                  <FormTextField label="Nowe hasło" onChange={ e => setPassword(e.target.value) }
+                                 type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          sx={{ color: 'white' }}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                        ),
+                    }}
+                  />
+              </div>
                   <div>
-                    <FormControl sx={{ m: 1, width: '25ch'}} variant="outlined">
-                      <InputLabel htmlFor="password2">Powtórz nowe hasło</InputLabel>
-                      <OutlinedInput
-                        id="password2"
-                        type={showPassword ? 'text' : 'password'}
-                        onChange={ e => setPassword2(e.target.value)}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                        label="Password2"
-                      />
-                    </FormControl>
+                    <FormTextField label="Powtórz nowe hasło" onChange={ e => setPassword2(e.target.value) }
+                                 type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          sx={{ color: 'white' }}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                        ),
+                    }}
+                  />
                   </div>
 
 
