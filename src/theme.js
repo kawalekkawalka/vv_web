@@ -8,12 +8,9 @@ const theme = createTheme({
         secondary: pink,
     },
     components: {
-        // Name of the component
         MuiInputLabel: {
           styleOverrides: {
-            // Name of the slot
             root: {
-              // Some CSS
                 color: 'white',
                 borderColor: 'white'
             },
@@ -21,12 +18,20 @@ const theme = createTheme({
         },
         MuiOutlinedInput: {
           styleOverrides: {
-            // Name of the slot
             root: {
-              // Some CSS
                 color: 'white',
                 borderColor: 'white',
                 outlineColor: 'white',
+            },
+          },
+        },
+        MuiTab: {
+          styleOverrides: {
+            root: {
+                color: 'white',
+                borderColor: 'white',
+                outlineColor: 'white',
+                backgroundColor: indigo[800],
             },
           },
         },
