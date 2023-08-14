@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import Matches from "../match/matches";
+import MatchesList from "../match/matches-list";
 
 const useStyles = makeStyles({
     container: {
@@ -106,7 +106,7 @@ function TeamDetails() {
             <div>
                 <TabContext value={tabValue}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                      <TabList onChange={handleTabChange} variant="fullWidth" textColor="white">
+                      <TabList onChange={handleTabChange} variant="fullWidth" textColor='white'>
                         <Tab label="Ostatnie mecze" value="1" />
                         <Tab label="Nadchodzące mecze" value="2" />
                         <Tab label="Statystyki zespołu" value="3" />
@@ -117,8 +117,8 @@ function TeamDetails() {
 
                       </TabList>
                     </Box>
-                    <TabPanel value="1"><Matches/></TabPanel>
-                    <TabPanel value="2">Item Two</TabPanel>
+                    <TabPanel value="1"><MatchesList params={{team: data.id, time: "past", amount: 5}}/></TabPanel>
+                    <TabPanel value="2"><MatchesList params={{team: data.id, time: "future", amount: 5}}/></TabPanel>
                     <TabPanel value="3">Item Three</TabPanel>
                     <TabPanel value="4">Item Four</TabPanel>
                     <TabPanel value="5">Item Five</TabPanel>
