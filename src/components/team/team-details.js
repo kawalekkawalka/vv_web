@@ -14,6 +14,9 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import MatchesList from "../match/matches-list";
+import {getTeamInvitations, sendTeamInvitation} from "../../services/team-invitations-services";
+import TeamInvitationsList from "./team-invitations-list";
+import {NotificationManager} from "react-notifications";
 
 const useStyles = makeStyles({
     container: {
@@ -22,9 +25,10 @@ const useStyles = makeStyles({
     },
     root: {
     display: 'flex',
-    flexDirection: 'row', // This will make the divs display in a row (left and right)
-    justifyContent: 'space-between', // This will add space between the divs
-    alignItems: 'flex-start', // This will align the divs to the top of the container
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    height: '40%',
     },
     leftSection: {
     flex: 1,
@@ -65,9 +69,13 @@ function TeamDetails() {
     }, [data])
 
     const handleJoinTeam =  () => {
-        joinTeam({player: authData.user.player.id, team: team.id}, authData.token).then(
+        // joinTeam({player: authData.user.player.id, team: team.id}, authData.token).then(
+        //     res => {console.log(res)}
+        // )
+        sendTeamInvitation({user: authData.user.id, team: team.id}, authData.token).then(
             res => {console.log(res)}
         )
+        NotificationManager.success("Zaproszenie wysłane");
     }
 
     const handleLeaveTeam =  () => {
@@ -85,7 +93,7 @@ function TeamDetails() {
       <div className={classes.container}>
         <div className={classes.root}>
           <div className={classes.leftSection}>
-            <h1>{team.name}: {team.description}</h1>
+              <h1>{team.name} </h1><h2>{team.description}</h2>
             <h2>Zawodnicy: </h2>
             <div className={classes.container}>
               {team.players.map(player => (
@@ -121,7 +129,7 @@ function TeamDetails() {
                     <TabPanel value="2"><MatchesList params={{team: data.id, time: "future", amount: 5}}/></TabPanel>
                     <TabPanel value="3">Item Three</TabPanel>
                     <TabPanel value="4">Item Four</TabPanel>
-                    <TabPanel value="5">Item Five</TabPanel>
+                    <TabPanel value="5" ><TeamInvitationsList params={{team: data.id}}/></TabPanel>
                   </TabContext>
             </div>
           </div>
