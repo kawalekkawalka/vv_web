@@ -69,9 +69,6 @@ function TeamDetails() {
     }, [data])
 
     const handleJoinTeam =  () => {
-        // joinTeam({player: authData.user.player.id, team: team.id}, authData.token).then(
-        //     res => {console.log(res)}
-        // )
         sendTeamInvitation({user: authData.user.id, team: team.id}, authData.token).then(
             res => {console.log(res)}
         )
