@@ -1,5 +1,5 @@
 import {makeStyles} from "@mui/styles";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useAuth} from "../../hooks/useAuth";
 import {useFetchMatches} from "../../hooks/fetch-matches";
 import {Link} from "react-router-dom";
@@ -18,17 +18,24 @@ export default function TeamInvitationsList({params}) {
 
     const {authData} = useAuth()
     const [invitations, loading, error] = useFetchTeamInvitations(params)
+    const [actualInvitations, setInvitations] = useState([]);
 
     const handleDeleteInvitation = async (id) => {
         const deleted = await deleteTeamInvitation(id, authData.token);
-        // if(deleted){
-        //
-        // }
+        if(deleted){
+            setInvitations((prevInvitations) => prevInvitations.filter((invitation) =>
+                invitation.id !== id));
+        }
     }
+
+    useEffect(() => {
+        setInvitations(invitations);
+    }, [invitations]);
+
 
     return (
         <div>
-            {invitations && invitations.map(invitation => {
+            {actualInvitations && actualInvitations.map(invitation => {
                 return <div key={invitation.id}>
                     <Player player={invitation.user.player}></Player>
                     <IconButton aria-label="delete invitation" onClick={() =>
