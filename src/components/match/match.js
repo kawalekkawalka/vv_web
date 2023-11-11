@@ -1,30 +1,28 @@
-import Avatar from "@mui/material/Avatar";
-import PropTypes from "prop-types";
 import {makeStyles} from "@mui/styles";
-
-
-const useStyles = makeStyles({
-    container: {
-        width: '250px',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        position: 'relative',
-    },
-    item: {
-    margin: '8px',
-  },
-})
+import PropTypes from "prop-types";
+import Player from "../player/player";
+import {DateTime} from "luxon";
+import {calculateSetResults} from "../../utils";
+import {Link} from "react-router-dom";
+import React from "react";
 
 export default function Match({match}) {
-
-    const classes = useStyles();
+    const format = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    const matchTime = DateTime.fromFormat(match.time, format);
+    const matchScore = calculateSetResults(match);
 
     return (
-        <div className={classes.container}>
-
-            <h4 >{match.team1 + "VS" + match.team2}</h4>
-        </div>
+        <Link to={`/details/match/${match.id}` } key={match.id}>
+            <h2 >{match.team1_name} vs {match.team2_name} {matchScore &&
+                <div>
+                    ({matchScore[0].team1score}:{matchScore[0].team2score})
+                </div>}
+            </h2>
+            <h3>{matchTime.toFormat('yyyy-MM-dd HH:mm')}</h3>
+        </Link>
     )
 }
 
+Match.propTypes = {
+    match : PropTypes.shape({}).isRequired
+}
