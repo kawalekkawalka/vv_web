@@ -18,21 +18,9 @@ const useStyles = makeStyles({
 })
 
 export default function TeamInvitationsList({params}) {
-
     const {authData} = useAuth()
     const [invitations, loading, error] = useFetchTeamInvitations(params)
     const [actualInvitations, setInvitations] = useState([]);
-
-    // const handleSetComment = async () => {
-    //     const comment = await sendComment(authData.user.id, newComment, contentType, objectId, authData.token);
-    //     if (comment){
-    //             setNewComment('');
-    //             actualComments.push(comment.result);
-    //         }
-     // joinTeam({player: authData.user.player.id, team: team.id}, authData.token).then(
-        //     res => {console.log(res)}
-        // )
-    // }
 
     const handleAcceptInvitation = async (invitationId, player, team) => {
         const joined = await joinTeam({player: player, team: team}, authData.token);

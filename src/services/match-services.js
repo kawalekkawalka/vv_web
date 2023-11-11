@@ -7,3 +7,8 @@ export function getMatches(params){
     return fetch(`http://127.0.0.1:8000/api/matches/?${queryString}`)
         .then(status).catch( e => {console.log(e)})
 }
+
+export function getMatch(id){
+    return fetch(`http://127.0.0.1:8000/api/matches/${id}/`)
+        .then(status).catch( e => {console.log(e)})
+}
