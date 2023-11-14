@@ -5,12 +5,14 @@ import { Routes, Route} from 'react-router-dom';
 import Register from "../user/register";
 import Account from "../user/account";
 import MatchDetails from "../match/match-details";
+import PlayerDetails from "../player/player-details";
 function Main() {
 
   return (
       <Routes>
           <Route exact path="/" element={<TeamList/>}/>
           <Route exact path="/details/team/:id" element={<TeamDetails/>}/>
+          <Route exact path="/details/player/:id" element={<PlayerDetails/>}/>
           <Route exact path="/details/match/:id" element={<MatchDetails/>}/>
           <Route exact path="/login" element={<Login/>}/>
           <Route exact path="/register" element={<Register/>}/>

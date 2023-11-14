@@ -13,7 +13,6 @@ const useStyles = makeStyles({
 })
 
 export default function MatchesList({params}) {
-    console.log(params)
     const {authData} = useAuth()
     const [matches, loading, error] = useFetchMatches(params)
 
