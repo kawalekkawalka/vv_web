@@ -24,7 +24,7 @@ import { visuallyHidden } from '@mui/utils';
 import {Link} from "react-router-dom";
 
 function createData(performances){
-  const rows2 = performances.map((performance) => {
+  const rows = performances.map((performance) => {
       const {
         set1_position,
         set2_position,
@@ -80,7 +80,54 @@ function createData(performances){
         dig,
       };
     });
-    return rows2;
+    return rows;
+}
+
+function sumData(rows){
+  let sumPoints = 0, sumBalance = 0, sumServe = 0, sumServeError = 0,
+      sumServeAce = 0, sumReception = 0, sumPositiveReception = 0, sumReceptionError = 0,
+       sumSpike = 0, sumSpikePoint = 0, sumSpikeBlock = 0, sumSpikeError = 0,
+      sumBlock = 0, sumDig = 0;
+  rows.map((row) => {
+    sumPoints = sumPoints + row.total_score
+    sumBalance = sumBalance + row.total_score_balance
+    sumServe = sumServe + row.serve
+    sumServeError = sumServeError + row.serve_error
+    sumServeAce = sumServeAce + row.serve_ace
+    sumReception = sumReception + row.reception
+    sumPositiveReception = sumPositiveReception + row.positive_reception
+    sumReceptionError = sumReceptionError + row.reception_error
+    sumSpike = sumSpike + row.spike
+    sumSpikePoint = sumSpikePoint + row.spike_point
+    sumSpikeBlock = sumSpikeBlock + row.spike_block
+    sumSpikeError = sumSpikeError + row.spike_error
+    sumBlock = sumBlock + row.block_amount
+    sumDig = sumDig + row.dig
+  })
+
+  const avgPositiveReception = Math.round((sumPositiveReception / sumReception) * 100)
+  const avgSpikeKillPercentage = Math.round((sumSpikePoint / sumSpike) * 100)
+  const avgSpikeEfficiency = Math.round(((sumSpikePoint-sumSpikeError-sumSpikeBlock) / sumSpike) * 100)
+
+  return ({
+    sumPoints,
+    sumBalance,
+    sumServe,
+    sumServeError,
+    sumServeAce,
+    sumReception,
+    sumPositiveReception,
+    sumReceptionError,
+    avgPositiveReception,
+    sumSpike,
+    sumSpikePoint,
+    sumSpikeBlock,
+    sumSpikeError,
+    avgSpikeKillPercentage,
+    avgSpikeEfficiency,
+    sumBlock,
+    sumDig
+  })
 }
 
 function descendingComparator(a, b, orderBy) {
@@ -327,6 +374,32 @@ function EnhancedTableToolbar({tableName}) {
   );
 }
 
+function TableSummary({rows}){
+  const dataSummary = sumData(rows)
+  return (
+    <TableRow>
+      <TableCell align={"right"} colSpan={7}>Łącznie:</TableCell>
+      <TableCell align="right">{dataSummary.sumPoints}</TableCell>
+      <TableCell align="right">{dataSummary.sumBalance}</TableCell>
+      <TableCell align="right">{dataSummary.sumServe}</TableCell>
+      <TableCell align="right">{dataSummary.sumServeError}</TableCell>
+      <TableCell align="right">{dataSummary.sumServeAce}</TableCell>
+      <TableCell align="right">{dataSummary.sumReception}</TableCell>
+      <TableCell align="right">{dataSummary.sumPositiveReception}</TableCell>
+      <TableCell align="right">{dataSummary.sumReceptionError}</TableCell>
+      <TableCell align="right">{dataSummary.avgPositiveReception}</TableCell>
+      <TableCell align="right">{dataSummary.sumSpike}</TableCell>
+      <TableCell align="right">{dataSummary.sumSpikePoint}</TableCell>
+      <TableCell align="right">{dataSummary.sumSpikeBlock}</TableCell>
+      <TableCell align="right">{dataSummary.sumSpikeError}</TableCell>
+      <TableCell align="right">{dataSummary.avgSpikeKillPercentage}</TableCell>
+      <TableCell align="right">{dataSummary.avgSpikeEfficiency}</TableCell>
+      <TableCell align="right">{dataSummary.sumBlock}</TableCell>
+      <TableCell align="right">{dataSummary.sumDig}</TableCell>
+    </TableRow>
+  );
+}
+
 export default function PerformanceTable({performances, tableName}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
@@ -409,6 +482,7 @@ export default function PerformanceTable({performances, tableName}) {
                   </TableRow>
                 );
               })}
+              <TableSummary rows={rows}></TableSummary>
             </TableBody>
           </Table>
         </TableContainer>

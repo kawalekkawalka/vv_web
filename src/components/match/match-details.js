@@ -16,10 +16,22 @@ const useStyles = makeStyles({
 function splitPerformancesByTeam(performances, team1Id, team2Id) {
   const team1Performances = performances.filter((performance) => performance.team.id === team1Id);
   const team2Performances = performances.filter((performance) => performance.team.id === team2Id);
-  console.log(team1Id)
   return {
     team1Performances, team2Performances};
 }
+
+function PerformanceWithHighestScore(performances){
+    if (!performances || performances.length === 0) {
+    return null;
+  }
+
+  const highestScorePerformance = performances.reduce((maxPerformance, currentPerformance) => {
+    return currentPerformance.total_score > maxPerformance.total_score ? currentPerformance : maxPerformance;
+  }, performances[0]);
+
+  return highestScorePerformance;
+}
+
 
 
 function MatchDetails() {
