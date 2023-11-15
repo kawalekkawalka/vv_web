@@ -23,65 +23,66 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import {Link} from "react-router-dom";
 
-function createData(performances){
+function createData(performances) {
   const rows = performances.map((performance) => {
-      const {
-        set1_position,
-        set2_position,
-        set3_position,
-        set4_position,
-        set5_position,
-        total_score,
-        total_score_balance,
-        serve,
-        serve_error,
-        serve_ace,
-        reception,
-        positive_reception,
-        reception_error,
-        positive_reception_percentage,
-        spike,
-        spike_point,
-        spike_block,
-        spike_error,
-        spike_kill_percentage,
-        spike_efficiency,
-        block_amount,
-        dig,
-      } = performance;
+    const {
+      set1_position,
+      set2_position,
+      set3_position,
+      set4_position,
+      set5_position,
+      total_score,
+      total_score_balance,
+      serve,
+      serve_error,
+      serve_ace,
+      reception,
+      positive_reception,
+      reception_error,
+      positive_reception_percentage,
+      spike,
+      spike_point,
+      spike_block,
+      spike_error,
+      spike_kill_percentage,
+      spike_efficiency,
+      block_amount,
+      dig,
+    } = performance;
 
-      const player_id = performance.player.id
-      const name = performance.player.name + " " + performance.player.surname
+    const player_id = performance.player.id;
+    const name = performance.player.name + " " + performance.player.surname;
 
-      return {
-        player_id,
-        name,
-        set1_position,
-        set2_position,
-        set3_position,
-        set4_position,
-        set5_position,
-        total_score,
-        total_score_balance,
-        serve,
-        serve_error,
-        serve_ace,
-        reception,
-        positive_reception,
-        reception_error,
-        positive_reception_percentage,
-        spike,
-        spike_point,
-        spike_block,
-        spike_error,
-        spike_kill_percentage,
-        spike_efficiency,
-        block_amount,
-        dig,
-      };
-    });
-    return rows;
+    return {
+      id:player_id,
+      name,
+      set1_position,
+      set2_position,
+      set3_position,
+      set4_position,
+      set5_position,
+      total_score,
+      total_score_balance,
+      serve,
+      serve_error,
+      serve_ace,
+      reception,
+      positive_reception,
+      reception_error,
+      positive_reception_percentage,
+      spike,
+      spike_point,
+      spike_block,
+      spike_error,
+      spike_kill_percentage,
+      spike_efficiency,
+      block_amount,
+      dig,
+    };
+  });
+  return rows;
 }
+
 
 function sumData(rows){
   let sumPoints = 0, sumBalance = 0, sumServe = 0, sumServeError = 0,

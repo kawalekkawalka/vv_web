@@ -8,9 +8,29 @@ import {DateTime} from "luxon";
 import {calculateSetResults} from "../../utils";
 import {useFetchPerformances} from "../../hooks/fetch-performances";
 import PerformanceTable from "../performance/performance-table";
+import Player from "../player/player";
 
 const useStyles = makeStyles({
-
+  container: {
+    textAlign: 'center',
+    margin: '20px',
+    padding: '20px',
+  },
+  header: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+  },
+  playersContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '40px',
+    marginTop: '10px',
+  },
+  totalScore: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+  },
 })
 
 function splitPerformancesByTeam(performances, team1Id, team2Id) {
@@ -20,7 +40,7 @@ function splitPerformancesByTeam(performances, team1Id, team2Id) {
     team1Performances, team2Performances};
 }
 
-function PerformanceWithHighestScore(performances){
+function findPerformanceWithHighestScore(performances){
     if (!performances || performances.length === 0) {
     return null;
   }
@@ -32,7 +52,73 @@ function PerformanceWithHighestScore(performances){
   return highestScorePerformance;
 }
 
+function findPerformanceWithMostAces(performances){
+    if (!performances || performances.length === 0) {
+    return null;
+  }
 
+  const highestScorePerformance = performances.reduce((maxPerformance, currentPerformance) => {
+    return currentPerformance.serve_ace > maxPerformance.serve_ace ? currentPerformance : maxPerformance;
+  }, performances[0]);
+
+  return highestScorePerformance;
+}
+
+function findPerformanceWithMostPositiveReceptions(performances){
+    if (!performances || performances.length === 0) {
+    return null;
+  }
+
+  const highestScorePerformance = performances.reduce((maxPerformance, currentPerformance) => {
+    return currentPerformance.positive_reception > maxPerformance.positive_reception ? currentPerformance : maxPerformance;
+  }, performances[0]);
+
+  return highestScorePerformance;
+}
+
+function findPerformanceWithMostSpikePoints(performances){
+    if (!performances || performances.length === 0) {
+    return null;
+  }
+
+  const highestScorePerformance = performances.reduce((maxPerformance, currentPerformance) => {
+    return currentPerformance.spike_point > maxPerformance.spike_point ? currentPerformance : maxPerformance;
+  }, performances[0]);
+
+  return highestScorePerformance;
+}
+
+function findPerformanceWithMostBlocks(performances){
+    if (!performances || performances.length === 0) {
+    return null;
+  }
+
+  const highestScorePerformance = performances.reduce((maxPerformance, currentPerformance) => {
+    return currentPerformance.block_amount > maxPerformance.block_amount ? currentPerformance : maxPerformance;
+  }, performances[0]);
+
+  return highestScorePerformance;
+}
+
+const PlayerComparison = ({ team1Performances, team2Performances, findPerformanceFunc, statLabel, label }) => {
+  const classes = useStyles();
+
+  const performance1 = findPerformanceFunc(team1Performances);
+  const performance2 = findPerformanceFunc(team2Performances);
+
+  return (
+    <div className={classes.container}>
+      <h2 className={classes.header}>{label}:</h2>
+      <div className={classes.playersContainer}>
+        <Player player={performance1.player} />
+        <span className={classes.totalScore}>{performance1[statLabel]}</span>
+        <span className={`${classes.header} ${classes.totalScore}`} style={{ fontSize: '30px' }}>vs</span>
+        <span className={classes.totalScore}>{performance2[statLabel]}</span>
+        <Player player={performance2.player} />
+      </div>
+    </div>
+  );
+};
 
 function MatchDetails() {
 
@@ -66,7 +152,7 @@ function MatchDetails() {
   return (
   <div>
     {match && team1Performances &&(
-      <div className={classes.container}>
+      <div>
         <div>
             <h1 >
                 <Link to={`/details/team/${match.team1}`}>{match.team1_name}</Link>
@@ -95,10 +181,25 @@ function MatchDetails() {
             </h3>
             <h3>{matchTime && matchTime.toFormat('yyyy-MM-dd HH:mm')}</h3>
         </div>
+          <hr />
         <div>
               <PerformanceTable performances={team1Performances} tableName={match.team1_name}></PerformanceTable>
               <PerformanceTable performances={team2Performances} tableName={match.team2_name}></PerformanceTable>
         </div>
+          <hr />
+        <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
+            findPerformanceFunc={findPerformanceWithHighestScore} label="Najwięcej punktów" statLabel="total_score"/>
+        <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
+            findPerformanceFunc={findPerformanceWithMostAces} label="Najwięcej asów" statLabel="serve_ace"/>
+        <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
+            findPerformanceFunc={findPerformanceWithMostPositiveReceptions} label="Najwięcej pozytywnych przyjęć"
+            statLabel="positive_reception"/>
+        <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
+            findPerformanceFunc={findPerformanceWithMostSpikePoints} label="Najwięcej skończonych ataków"
+            statLabel="spike_point"/>
+        <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
+            findPerformanceFunc={findPerformanceWithMostBlocks} label="Najwięcej bloków"
+            statLabel="block_amount"/>
         <div>
           <hr />
           <Comments comments={match.comments} objectId={match.id} contentType={'match'} />
