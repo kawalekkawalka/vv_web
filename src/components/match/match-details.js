@@ -36,6 +36,9 @@ const useStyles = makeStyles({
 function splitPerformancesByTeam(performances, team1Id, team2Id) {
   const team1Performances = performances.filter((performance) => performance.team.id === team1Id);
   const team2Performances = performances.filter((performance) => performance.team.id === team2Id);
+  if(team1Performances.length == 0 && team2Performances.length == 0){
+      return NaN, NaN;
+  }
   return {
     team1Performances, team2Performances};
 }
@@ -151,7 +154,7 @@ function MatchDetails() {
 
   return (
   <div>
-    {match && team1Performances &&(
+    {match &&
       <div>
         <div>
             <h1 >
@@ -182,30 +185,35 @@ function MatchDetails() {
             <h3>{matchTime && matchTime.toFormat('yyyy-MM-dd HH:mm')}</h3>
         </div>
           <hr />
+          {team1Performances ? (
         <div>
-              <PerformanceTable performances={team1Performances} tableName={match.team1_name}></PerformanceTable>
-              <PerformanceTable performances={team2Performances} tableName={match.team2_name}></PerformanceTable>
-        </div>
+            <PerformanceTable performances={team1Performances} tableName={match.team1_name}></PerformanceTable>
+            <PerformanceTable performances={team2Performances} tableName={match.team2_name}></PerformanceTable>
           <hr />
-        <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
-            findPerformanceFunc={findPerformanceWithHighestScore} label="Najwięcej punktów" statLabel="total_score"/>
-        <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
-            findPerformanceFunc={findPerformanceWithMostAces} label="Najwięcej asów" statLabel="serve_ace"/>
-        <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
-            findPerformanceFunc={findPerformanceWithMostPositiveReceptions} label="Najwięcej pozytywnych przyjęć"
-            statLabel="positive_reception"/>
-        <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
-            findPerformanceFunc={findPerformanceWithMostSpikePoints} label="Najwięcej skończonych ataków"
-            statLabel="spike_point"/>
-        <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
-            findPerformanceFunc={findPerformanceWithMostBlocks} label="Najwięcej bloków"
-            statLabel="block_amount"/>
+            <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
+                findPerformanceFunc={findPerformanceWithHighestScore} label="Najwięcej punktów" statLabel="total_score"/>
+            <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
+                findPerformanceFunc={findPerformanceWithMostAces} label="Najwięcej asów" statLabel="serve_ace"/>
+            <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
+                findPerformanceFunc={findPerformanceWithMostPositiveReceptions} label="Najwięcej pozytywnych przyjęć"
+                statLabel="positive_reception"/>
+            <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
+                findPerformanceFunc={findPerformanceWithMostSpikePoints} label="Najwięcej skończonych ataków"
+                statLabel="spike_point"/>
+            <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
+                findPerformanceFunc={findPerformanceWithMostBlocks} label="Najwięcej bloków"
+                statLabel="block_amount"/>
+        </div>
+          ) : (
+              <h1>Brak statystyk dla tego spotkania</h1>
+          )
+          }
         <div>
           <hr />
           <Comments comments={match.comments} objectId={match.id} contentType={'match'} />
         </div>
       </div>
-    )}
+    }
   </div>
 );
 
