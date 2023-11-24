@@ -185,7 +185,7 @@ function MatchDetails() {
             <h3>{matchTime && matchTime.toFormat('yyyy-MM-dd HH:mm')}</h3>
         </div>
           <hr />
-          {team1Performances ? (
+          {team1Performances && team2Performances ? (
         <div>
             <PerformanceTable performances={team1Performances} tableName={match.team1_name}></PerformanceTable>
             <PerformanceTable performances={team2Performances} tableName={match.team2_name}></PerformanceTable>

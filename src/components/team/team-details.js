@@ -17,6 +17,7 @@ import MatchesList from "../match/matches-list";
 import {getTeamInvitations, sendTeamInvitation} from "../../services/team-invitations-services";
 import TeamInvitationsList from "./team-invitations-list";
 import {NotificationManager} from "react-notifications";
+import TeamPerformance from "../performance/team-performance";
 
 const useStyles = makeStyles({
     container: {
@@ -124,7 +125,7 @@ function TeamDetails() {
                     </Box>
                     <TabPanel value="1"><MatchesList params={{team: data.id, time: "past", amount: 5}}/></TabPanel>
                     <TabPanel value="2"><MatchesList params={{team: data.id, time: "future", amount: 5}}/></TabPanel>
-                    <TabPanel value="3">Item Three</TabPanel>
+                    <TabPanel value="3"><TeamPerformance params={{team: team.id}}/></TabPanel>
                     <TabPanel value="4">Item Four</TabPanel>
                     <TabPanel value="5" ><TeamInvitationsList params={{team: data.id}}/></TabPanel>
                   </TabContext>
