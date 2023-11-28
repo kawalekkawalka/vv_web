@@ -455,7 +455,7 @@ export default function PerformanceTable({performances, tableName}) {
                       scope="row"
                       padding="none"
                     >
-                      <Link to={`/details/player/${row.player_id}`}>{row.name}</Link>
+                      <Link to={`/details/player/${row.id}`}>{row.name}</Link>
                     </TableCell>
                     <TableCell align="right">{row.set1_position}</TableCell>
                     <TableCell align="right">{row.set2_position}</TableCell>
