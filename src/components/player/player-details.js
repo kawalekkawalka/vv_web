@@ -17,6 +17,9 @@ import PlayersIndividualPerformance from "../performance/players-individual-perf
 import TeamInvitationsList from "../team/team-invitations-list";
 import Avatar from "@mui/material/Avatar";
 import MenuItem from "@mui/material/MenuItem";
+import {useFetchPerformances} from "../../hooks/fetch-performances";
+import PlayerLastPerformancesTable from "../tables/player-last-performances-table";
+import PlayerTeamList from "./player-team-list";
 
 const useStyles = makeStyles({
     container: {
@@ -63,6 +66,7 @@ function PlayerDetails() {
     const {authData} = useAuth()
     const classes = useStyles();
     const [tabValue, setTabValue] = useState("1");
+    const [performances] = useFetchPerformances({player:id, amount:10})
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
     };
@@ -94,27 +98,28 @@ function PlayerDetails() {
               <h2>Waga: {player.weight ? `${player.weight}kg` : '-,-'}</h2>
             <br />
           </div>
-
-          <div className={classes.rightSection}>
-            <div>
+            {performances && (
+              <div className={classes.rightSection}>
                 <TabContext value={tabValue}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                       <TabList onChange={handleTabChange} variant="fullWidth" textColor='white'>
-                        <Tab label="Ostatnie statystyki" value="1" />
+                        <Tab label="Ostatnie mecze" value="1" />
                         <Tab label="Nadchodzące mecze" value="2" />
-                        <Tab label="Ostatnie mecze" value="3" />
-                        <Tab label="Rekordy" value="4" />
-                        <Tab label="Zespoły" value="5" />
+                        <Tab label="Rekordy" value="3" />
+                        <Tab label="Zespoły" value="4" />
 
                       </TabList>
                     </Box>
-                    <TabPanel value="1"></TabPanel>
-                    <TabPanel value="2"></TabPanel>
+                    <TabPanel value="1"><PlayerLastPerformancesTable
+                        performances={performances}
+                        tableName="Ostatnie występy zawodnika"/>
+                    </TabPanel>
+                    <TabPanel value="2">Sadge :(</TabPanel>
                     <TabPanel value="3"></TabPanel>
-                    <TabPanel value="4"></TabPanel>
+                    <TabPanel value="4"><PlayerTeamList id={id}/></TabPanel>
                   </TabContext>
-            </div>
           </div>
+            )}
         </div>
         <div>
           <hr />

@@ -1,7 +1,10 @@
 import {status} from "../utils";
 
-export function getTeams(){
-    return fetch(`http://127.0.0.1:8000/api/teams/`)
+export function getTeams(params){
+    const queryString = Object.keys(params)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        .join('&');
+    return fetch(`http://127.0.0.1:8000/api/teams/?${queryString}`)
         .then(status).catch( e => {console.log(e)})
 }
 

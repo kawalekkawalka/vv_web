@@ -7,7 +7,7 @@ import {useFetchMatch} from "../../hooks/fetch-match";
 import {DateTime} from "luxon";
 import {calculateSetResults} from "../../utils";
 import {useFetchPerformances} from "../../hooks/fetch-performances";
-import MatchPerformanceTable from "../performance/match-performance-table";
+import MatchPerformanceTable from "../tables/match-performance-table";
 import Player from "../player/player";
 
 const useStyles = makeStyles({
