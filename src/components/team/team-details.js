@@ -34,13 +34,12 @@ const useStyles = makeStyles({
     },
     leftSection: {
     flex: 1,
-    width: '40%',
-    borderRight: '2px solid white',    // This will make the left div grow to fill the available space
+    width: '30%',
+    borderRight: '2px solid white',
     },
     rightSection: {
     flex: 2,
-    width: '60%',    // This will make the right div grow to fill the available space
-     // Add some space between the left and right divs
+    width: '70%',
     },
 })
 
