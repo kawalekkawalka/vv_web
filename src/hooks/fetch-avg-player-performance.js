@@ -14,8 +14,8 @@ export function useFetchAvgPlayersPerformance(params, players) {
         setLoading(true);
 
         const performancePromises = players.map(async (player) => {
-            const params = {player:player.id};
-          const data = await getAvgPlayerPerformance(params);
+            const query_params = {player:player.id, team:params.team};
+          const data = await getAvgPlayerPerformance(query_params);
           return data;
         });
 

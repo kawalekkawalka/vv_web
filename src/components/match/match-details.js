@@ -7,7 +7,7 @@ import {useFetchMatch} from "../../hooks/fetch-match";
 import {DateTime} from "luxon";
 import {calculateSetResults} from "../../utils";
 import {useFetchPerformances} from "../../hooks/fetch-performances";
-import PerformanceTable from "../performance/performance-table";
+import MatchPerformanceTable from "../performance/match-performance-table";
 import Player from "../player/player";
 
 const useStyles = makeStyles({
@@ -187,8 +187,8 @@ function MatchDetails() {
           <hr />
           {team1Performances && team2Performances ? (
         <div>
-            <PerformanceTable performances={team1Performances} tableName={match.team1_name}></PerformanceTable>
-            <PerformanceTable performances={team2Performances} tableName={match.team2_name}></PerformanceTable>
+            <MatchPerformanceTable performances={team1Performances} tableName={match.team1_name}></MatchPerformanceTable>
+            <MatchPerformanceTable performances={team2Performances} tableName={match.team2_name}></MatchPerformanceTable>
           <hr />
             <PlayerComparison team1Performances={team1Performances} team2Performances={team2Performances}
                 findPerformanceFunc={findPerformanceWithHighestScore} label="Najwięcej punktów" statLabel="total_score"/>

@@ -401,7 +401,7 @@ function TableSummary({rows}){
   );
 }
 
-export default function PerformanceTable({performances, tableName}) {
+export default function MatchPerformanceTable({performances, tableName}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
   const [dense, setDense] = React.useState(true);
