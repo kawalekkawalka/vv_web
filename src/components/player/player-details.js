@@ -13,6 +13,7 @@ import Avatar from "@mui/material/Avatar";
 import {useFetchPerformances} from "../../hooks/fetch-performances";
 import PlayerLastPerformancesTable from "../tables/player-last-performances-table";
 import TeamList from "../team/team-list";
+import MatchesList from "../match/matches-list";
 
 const useStyles = makeStyles({
     container: {
@@ -107,7 +108,7 @@ function PlayerDetails() {
                         performances={performances}
                         tableName="Ostatnie występy zawodnika"/>
                     </TabPanel>
-                    <TabPanel value="2">Sadge :(</TabPanel>
+                    <TabPanel value="2"><MatchesList params={{player: id, time: "future", amount: 5}}/></TabPanel>
                     <TabPanel value="3"></TabPanel>
                     <TabPanel value="4"><TeamList params={{player: id,}}/></TabPanel>
                   </TabContext>
