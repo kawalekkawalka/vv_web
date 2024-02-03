@@ -2,11 +2,10 @@ import React, {useState, useEffect} from "react";
 import {useFetchTeams} from "../../hooks/fetch-teams";
 import Paper from "@mui/material/Paper";
 import {lighten} from "polished";
-import Team from "./team";
+import Team from "../team/team";
 
-function TeamList() {
-
-    const [teams, loading, error] = useFetchTeams();
+function TeamList({params}) {
+    const [teams, loading, error] = useFetchTeams(params);
     const backgroundColor = lighten(0.05, '#282c34');
   return (
     <div>

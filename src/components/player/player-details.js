@@ -4,22 +4,15 @@ import {useAuth} from "../../hooks/useAuth";
 import {makeStyles} from "@mui/styles";
 import Comments from "../comments/comments";
 import {useFetchPlayer} from "../../hooks/fetch-player";
-import Player from "./player";
-import Button from "@mui/material/Button";
 import TabContext from "@mui/lab/TabContext";
 import Box from "@mui/material/Box";
 import TabList from "@mui/lab/TabList";
 import {Tab} from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
-import MatchesList from "../match/matches-list";
-import TeamPerformance from "../performance/team-performance";
-import PlayersIndividualPerformance from "../performance/players-individual-performance";
-import TeamInvitationsList from "../team/team-invitations-list";
 import Avatar from "@mui/material/Avatar";
-import MenuItem from "@mui/material/MenuItem";
 import {useFetchPerformances} from "../../hooks/fetch-performances";
 import PlayerLastPerformancesTable from "../tables/player-last-performances-table";
-import PlayerTeamList from "./player-team-list";
+import TeamList from "../team/team-list";
 
 const useStyles = makeStyles({
     container: {
@@ -116,7 +109,7 @@ function PlayerDetails() {
                     </TabPanel>
                     <TabPanel value="2">Sadge :(</TabPanel>
                     <TabPanel value="3"></TabPanel>
-                    <TabPanel value="4"><PlayerTeamList id={id}/></TabPanel>
+                    <TabPanel value="4"><TeamList params={{player: id,}}/></TabPanel>
                   </TabContext>
           </div>
             )}
