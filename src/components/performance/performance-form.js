@@ -7,6 +7,8 @@ import { sendPerformance } from "../../services/performance-services";
 import { useAuth } from "../../hooks/useAuth";
 import { useFetchMatch } from "../../hooks/fetch-match";
 import Match from "../match/match";
+import MatchScoreForm from "../match/match-score-form";
+import MatchWithScore from "../match/match-with-score";
 
 export default function PerformanceForm() {
   const { id } = useParams();
@@ -26,6 +28,10 @@ export default function PerformanceForm() {
       localStorage.setItem("team2PerformanceData", JSON.stringify(team2PerformanceData));
     }
   }, [team2PerformanceData]);
+
+  useEffect( () => {
+    console.log('hejka stulejka')
+  }, [MatchScoreForm])
 
   const table1Data = (table1Data) => {
     setTeam1PerformanceData(table1Data);
@@ -71,13 +77,16 @@ export default function PerformanceForm() {
     <div className="App">
       {match &&
         <div>
-          <Match match={match} />
+          <MatchWithScore match={match}/>
+          <MatchScoreForm match={match}></MatchScoreForm>
+          <br/>
+          <br/>
           <MatchPerformanceEditTable
               tableIndex={1}
               teamId={match.team1}
               tableData={table1Data}
           ></MatchPerformanceEditTable>
-          <br />
+          <br/>
           <MatchPerformanceEditTable
               tableIndex={2}
               teamId={match.team2}

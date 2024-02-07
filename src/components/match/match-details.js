@@ -10,6 +10,8 @@ import {useFetchPerformances} from "../../hooks/fetch-performances";
 import MatchPerformanceTable from "../tables/match-performance-table";
 import Player from "../player/player";
 import Button from "@mui/material/Button";
+import MatchWithScore from "./match-with-score";
+import {useFetchMatchParticipants} from "../../hooks/fetch-match-participants";
 
 const useStyles = makeStyles({
     container: {
@@ -130,26 +132,27 @@ function MatchDetails() {
     const {id} = useParams();
     const [match, loading, error] = useFetchMatch(id);
     const [performances] = useFetchPerformances({match: id})
+    const [participants] = useFetchMatchParticipants({match: id})
     const {authData} = useAuth()
     const classes = useStyles();
-    const format = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-    const [matchTime, setMatchTime] = useState()
-    const [matchScore, setMatchScore] = useState()
     const [team1Performances, setTeam1Performances] = useState();
     const [team2Performances, setTeam2Performances] = useState();
+    const [isParticipant, setParticipant] = useState(false);
 
     useEffect(() => {
-        if (match) {
-            setMatchTime(DateTime.fromFormat(match.time, format));
-            setMatchScore(calculateSetResults(match));
-            if (performances) {
-                const {team1Performances, team2Performances} = splitPerformancesByTeam(
-                    performances, match.team1, match.team2);
-                setTeam1Performances(team1Performances);
-                setTeam2Performances(team2Performances);
-            }
+        if (match && performances) {
+            const {team1Performances, team2Performances} = splitPerformancesByTeam(
+                performances, match.team1, match.team2);
+            setTeam1Performances(team1Performances);
+            setTeam2Performances(team2Performances);
         }
-    }, [match, performances])
+    }, [performances])
+
+    useEffect(() => {
+        if (participants && authData?.user) {
+            setParticipant(!!participants.find(participant => participant.id === authData.user.player.id));
+        }
+    }, [participants])
 
     if (error) return <h1>Error</h1>
     if (loading) return <h1>Loading...</h1>
@@ -158,34 +161,7 @@ function MatchDetails() {
         <div>
             {match &&
                 <div>
-                    <div>
-                        <h1>
-                            <Link to={`/details/team/${match.team1}`}>{match.team1_name}</Link>
-                            <span> vs </span>
-                            <Link to={`/details/team/${match.team2}`}>{match.team2_name}</Link>
-                            {matchScore &&
-                                <div>
-                                    ({matchScore[0].team1score}:{matchScore[0].team2score})
-                                </div>}
-                        </h1>
-                        <h3>
-                            {Array.from({length: 5}, (_, index) => {
-                                const team1Score = match[`set${index + 1}_team1_score`];
-                                const team2Score = match[`set${index + 1}_team2_score`];
-
-                                if (team1Score === 0 && team2Score === 0) {
-                                    return null; //
-                                }
-
-                                return (
-                                    <span key={index}>
-                            ({team1Score}:{team2Score}){index < 4 ? ', ' : ''}
-                        </span>
-                                );
-                            })}
-                        </h3>
-                        <h3>{matchTime && matchTime.toFormat('yyyy-MM-dd HH:mm')}</h3>
-                    </div>
+                    <MatchWithScore match={match}/>
                     <hr/>
                     {team1Performances && team2Performances ? (
                         <div>
@@ -221,10 +197,14 @@ function MatchDetails() {
                     ) : (
                         <div>
                             <h1>Brak statystyk dla tego spotkania</h1>
-                            <Button href={`/details/match/edit/${match.id}` } color="primary" variant="contained">
-                                Dodaj statystyki
-                            </Button>
+
                         </div>
+                    )
+                    }
+                    {isParticipant && (
+                        <Button href={`/details/match/edit/${match.id}`} color="primary" variant="contained">
+                            Dodaj statystyki
+                        </Button>
                     )
                     }
                     <div>
