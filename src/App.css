@@ -14,4 +14,7 @@ a {
   color: white;
 }
 
-
+.hover-icon:hover {
+  color: #777; /* Change the color on hover as per your preference */
+  cursor: pointer;
+}
