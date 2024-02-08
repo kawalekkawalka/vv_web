@@ -143,8 +143,6 @@ export default function MatchScoreForm({match}) {
                         />
                     </div>
                 </div>
-
-                {/* Set 4 */}
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     <div style={{display: 'flex', alignItems: 'center', marginRight: '8px'}}>
                         <TextField

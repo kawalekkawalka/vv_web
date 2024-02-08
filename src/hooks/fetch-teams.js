@@ -1,23 +1,26 @@
-import {useState, useEffect} from "react";
-import {getTeam, getTeams} from "../services/team-services";
+import { useEffect, useState } from "react";
+import { getTeams } from "../services/team-services";
 
 export function useFetchTeams(params) {
+  const [teams, setTeams] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const [teams, setTeams] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-
-  useEffect(()=>{
+  const fetchTeams = async () => {
+    try {
       setLoading(true);
-    const getData = async () => {
-          setLoading(true);
-          const data = await getTeams(params);
-          setTeams(data);
-          setLoading(false)
-      }
-    getData()
-  }, [])
+      const fetchedTeams = await getTeams(params);
+      setTeams(fetchedTeams);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  return [teams, loading, error]
+  useEffect(() => {
+    fetchTeams();
+  }, [params]);
 
+  return [teams, loading, error, fetchTeams];
 }

@@ -36,3 +36,15 @@ export function leaveTeam(data, token){
     })
         .then(status).catch( e => {console.log(e)})
 }
+
+export function createTeam(data, token){
+    return fetch(`http://127.0.0.1:8000/api/teams/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        },
+        body: JSON.stringify(data)
+    })
+        .then(status).catch( e => {console.log(e)})
+}

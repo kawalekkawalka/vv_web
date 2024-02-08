@@ -7,6 +7,7 @@ import Account from "../user/account";
 import MatchDetails from "../match/match-details";
 import PlayerDetails from "../player/player-details";
 import PerformanceForm from "../performance/performance-form";
+import UserTeams from "../user/user-teams";
 function Main() {
 
   return (
@@ -18,7 +19,8 @@ function Main() {
           <Route exact path="/details/match/edit/:id" element={<PerformanceForm/>}/>
           <Route exact path="/login" element={<Login/>}/>
           <Route exact path="/register" element={<Register/>}/>
-          <Route exact path="/account" element={<Account/>}/>
+          <Route exact path="/user/account" element={<Account/>}/>
+          <Route exact path="/user/teams" element={<UserTeams/>}/>
       </Routes>
 
   );

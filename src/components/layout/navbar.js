@@ -101,13 +101,11 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
                 <MenuItem >
-                  <Link to={'/account'}>Moje konto</Link>
+                  <Link to={'/user/account'}>Moje konto</Link>
                 </MenuItem>
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem >
+                  <Link to={'/user/teams'}>Zespoły</Link>
                 </MenuItem>
-              ))}
                 <MenuItem onClick={logout}>
                   <Typography textAlign="center">Wyloguj</Typography>
                 </MenuItem>
