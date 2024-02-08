@@ -48,8 +48,10 @@ export default function TeamForm({ onReloadTeamList }) {
                         createTeam(formJson, authData.token)
                             .then(res => {
                                 console.log(res);
-                                NotificationManager.success("Drużyna dodana");
-                                onReloadTeamList();
+                                if(res.id){
+                                    NotificationManager.success("Drużyna dodana");
+                                    onReloadTeamList();
+                                }
                             })
                             .catch(error => {
                                 console.error(error);

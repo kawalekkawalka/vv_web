@@ -1,23 +1,26 @@
-import {useState, useEffect} from "react";
+import { useEffect, useState } from "react";
 import {getMatches} from "../services/match-services";
 
 export function useFetchMatches(params) {
+  const [matches, setMatches] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const [matches, setMatches] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-
-  useEffect(()=>{
+  const fetchMatches = async () => {
+    try {
       setLoading(true);
-    const getData = async () => {
-          setLoading(true);
-          const data = await getMatches(params);
-          setMatches(data);
-          setLoading(false)
-      }
-    getData()
-  }, [])
+      const fetchedMatches = await getMatches(params);
+      setMatches(fetchedMatches);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  return [matches, loading, error]
+  useEffect(() => {
+    fetchMatches();
+  }, [params]);
 
+  return [matches, loading, error, fetchMatches];
 }

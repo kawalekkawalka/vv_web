@@ -32,3 +32,15 @@ export function getMatchParticipants(params){
     return fetch(`http://127.0.0.1:8000/api/matches/get_match_participants/?${queryString}`)
         .then(status).catch( e => {console.log(e)})
 }
+
+export function createMatch(data, token){
+    return fetch(`http://127.0.0.1:8000/api/matches/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        },
+        body: JSON.stringify(data)
+    })
+        .then(status).catch( e => {console.log(e)})
+}
