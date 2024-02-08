@@ -1,4 +1,4 @@
-import {indigo, pink} from "@mui/material/colors";
+import {indigo, pink, white} from "@mui/material/colors";
 import {createTheme} from "@mui/material";
 
 
@@ -6,6 +6,7 @@ const theme = createTheme({
     palette: {
         primary: indigo,
         secondary: pink,
+        white: 'white'
     },
     components: {
         MuiInputLabel: {

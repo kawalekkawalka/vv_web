@@ -3,21 +3,16 @@ import { useFetchTeams } from "../../hooks/fetch-teams";
 import Paper from "@mui/material/Paper";
 import { lighten } from "polished";
 import Team from "../team/team";
-import { getTeams } from "../../services/team-services";
 
 function TeamList({ params, reload }) {
   const [teams, loading, error, fetchTeams] = useFetchTeams(params);
   const backgroundColor = lighten(0.05, "#282c34");
 
   useEffect(() => {
-    fetchTeams(); // Initial fetch
-  }, [params]); // Trigger fetch when params change
-
-  useEffect(() => {
     if (reload) {
-      fetchTeams(); // Trigger fetch when reload prop changes
+      fetchTeams();
     }
-  }, [reload]);
+  }, [params, reload]);
 
   if (error) return <h1>Error</h1>;
   if (loading) return <h1>Loading...</h1>;
