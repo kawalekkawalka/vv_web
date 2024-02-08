@@ -3,7 +3,7 @@ import {Link, useParams} from 'react-router-dom';
 import {useFetchTeam} from "../../hooks/fetch-team";
 import Button from "@mui/material/Button";
 import {useAuth} from "../../hooks/useAuth";
-import {joinTeam, leaveTeam} from "../../services/team-services";
+import {deleteTeam, joinTeam, leaveTeam} from "../../services/team-services";
 import Player from "../player/player";
 import {makeStyles} from "@mui/styles";
 import Comments from "../comments/comments";
@@ -82,6 +82,12 @@ function TeamDetails() {
         )
     }
 
+    const handleDeleteTeam =  () => {
+        deleteTeam(id, authData.token).then(
+            res => {console.log(res)}
+        )
+    }
+
     if (error) return <h1>Error</h1>
     if (loading) return <h1>Loading...</h1>
 
@@ -100,11 +106,14 @@ function TeamDetails() {
             </div>
             <br />
             {authData && (
+              isOwner ? (
+                 <Button color="primary" variant="contained" onClick={handleDeleteTeam}>Usuń zespół</Button>
+                  ) : (
               inTeam ? (
                 <Button color="primary" variant="contained" onClick={handleLeaveTeam}>Opuść zespół</Button>
               ) : (
                 <Button color="primary" variant="contained" onClick={handleJoinTeam}>Dołącz do zespołu</Button>
-              )
+              ))
             )}
           </div>
 

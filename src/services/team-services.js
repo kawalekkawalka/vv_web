@@ -48,3 +48,14 @@ export function createTeam(data, token){
     })
         .then(status).catch( e => {console.log(e)})
 }
+
+export function deleteTeam(id, token){
+    return fetch(`http://127.0.0.1:8000/api/teams/${id}/`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        },
+    })
+        .then(status).catch( e => {console.log(e)})
+}
