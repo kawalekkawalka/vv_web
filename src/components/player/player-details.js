@@ -15,6 +15,10 @@ import PlayerLastPerformancesTable from "../tables/player-last-performances-tabl
 import TeamList from "../team/team-list";
 import MatchesList from "../match/matches-list";
 import PlayerRecords from "./player-records";
+import Button from "@mui/material/Button";
+import {NotificationManager} from "react-notifications";
+import {leaveTeam} from "../../services/team-services";
+import {sendFriendInvitation} from "../../services/user-friendship-invitations-services";
 
 const useStyles = makeStyles({
     container: {
@@ -66,6 +70,44 @@ function PlayerDetails() {
         setTabValue(newValue);
     };
 
+    const handleSendFriendInvitation = () => {
+        sendFriendInvitation({inviter: authData.user.id, invitee: player.user}, authData.token).then(
+            (res) => {
+                console.log(res);
+                switch (res.message) {
+                    case 'Invitation sent':
+                        NotificationManager.success('Zaproszenie wysłane');
+                        break;
+                    case 'Friendship already exist':
+                        NotificationManager.info('Już jesteście znajomymi');
+                        break;
+                    case 'Invitee already invited you. Friendship created':
+                        NotificationManager.info('Zaproszony również Cię zaprosił. Znajomy został dodany');
+                        break;
+                    case 'Invitation already sent':
+                        NotificationManager.info('Zaproszenie już wysłane');
+                        break;
+                    default:
+                        NotificationManager.error('Nieoczekiwana odpowiedź');
+                        break;
+                }
+            }
+        ).catch(error => {
+            console.error(error);
+            NotificationManager.error("Wystąpił błąd podczas wysyłania zaproszenia");
+        });
+        ;
+    };
+
+
+    // const handleLeaveTeam = () => {
+    //     leaveTeam({player: authData.user.player.id, team: team.id}, authData.token).then(
+    //         res => {
+    //             console.log(res)
+    //         }
+    //     )
+    //     NotificationManager.success("Opuszczono drużynę");
+    // }
 
     if (error) return <h1>Error</h1>
     if (loading) return <h1>Loading...</h1>
@@ -92,6 +134,10 @@ function PlayerDetails() {
                             <h2>Rocznik: {player.year_of_birth}</h2>
                             <h2>Waga: {player.weight ? `${player.weight}kg` : '-,-'}</h2>
                             <br/>
+                            {authData && authData.user.player.id != id &&
+                                <Button color="primary" variant="contained" onClick={handleSendFriendInvitation}>Dodaj
+                                    znajomego</Button>
+                            }
                         </div>
                         {performances && (
                             <div className={classes.rightSection}>
