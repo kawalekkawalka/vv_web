@@ -14,9 +14,9 @@ const MatchWithScore = ({ match }) => {
   return (
     <div>
       <h1>
-        <Link to={`/details/team/${match.team1}`}>{match.team1_name}</Link>
+        <Link to={`/details/team/${match.team1.id}`}>{match.team1.name}</Link>
         <span> vs </span>
-        <Link to={`/details/team/${match.team2}`}>{match.team2_name}</Link>
+        <Link to={`/details/team/${match.team2.id}`}>{match.team2.name}</Link>
         {matchScore && (
           <div>
             ({matchScore[0].team1score}:{matchScore[0].team2score})

@@ -44,3 +44,14 @@ export function createMatch(data, token){
     })
         .then(status).catch( e => {console.log(e)})
 }
+
+export function deleteMatch(id, token){
+    return fetch(`http://127.0.0.1:8000/api/matches/${id}/`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        },
+    })
+        .then(status).catch( e => {console.log(e)})
+}

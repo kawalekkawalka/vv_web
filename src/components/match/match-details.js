@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {useAuth} from "../../hooks/useAuth";
 import {makeStyles} from "@mui/styles";
 import Comments from "../comments/comments";
@@ -12,6 +12,9 @@ import Player from "../player/player";
 import Button from "@mui/material/Button";
 import MatchWithScore from "./match-with-score";
 import {useFetchMatchParticipants} from "../../hooks/fetch-match-participants";
+import {deleteTeam} from "../../services/team-services";
+import {NotificationManager} from "react-notifications";
+import {deleteMatch} from "../../services/match-services";
 
 const useStyles = makeStyles({
     container: {
@@ -137,12 +140,20 @@ function MatchDetails() {
     const classes = useStyles();
     const [team1Performances, setTeam1Performances] = useState();
     const [team2Performances, setTeam2Performances] = useState();
-    const [isParticipant, setParticipant] = useState(false);
+    const [isParticipant, setIsParticipant] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (match && authData?.user) {
+            setIsOwner(match.team1.owner === authData.user.id || match.team2.owner === authData.user.id);
+        }
+    }, [match])
 
     useEffect(() => {
         if (match && performances) {
             const {team1Performances, team2Performances} = splitPerformancesByTeam(
-                performances, match.team1, match.team2);
+                performances, match.team1.id, match.team2.id);
             setTeam1Performances(team1Performances);
             setTeam2Performances(team2Performances);
         }
@@ -150,9 +161,20 @@ function MatchDetails() {
 
     useEffect(() => {
         if (participants && authData?.user) {
-            setParticipant(!!participants.find(participant => participant.id === authData.user.player.id));
+            setIsParticipant(!!participants.find(participant => participant.id === authData.user.player.id));
         }
     }, [participants])
+
+    const handleDeleteMatch = () => {
+        deleteMatch(id, authData.token)
+            .then(res => {
+                console.log(res);
+                if (res.message === 'Successfully deleted') {
+                    NotificationManager.success("Usunięto mecz");
+                    navigate("/user/matches");
+                }
+            });
+    };
 
     if (error) return <h1>Error</h1>
     if (loading) return <h1>Loading...</h1>
@@ -162,13 +184,16 @@ function MatchDetails() {
             {match &&
                 <div>
                     <MatchWithScore match={match}/>
+                    {isOwner &&
+                        <Button color="primary" variant="contained" onClick={handleDeleteMatch}>Usuń mecz</Button>
+                    }
                     <hr/>
                     {team1Performances && team2Performances ? (
                         <div>
                             <MatchPerformanceTable performances={team1Performances}
-                                                   tableName={match.team1_name}></MatchPerformanceTable>
+                                                   tableName={match.team1.name}></MatchPerformanceTable>
                             <MatchPerformanceTable performances={team2Performances}
-                                                   tableName={match.team2_name}></MatchPerformanceTable>
+                                                   tableName={match.team2.name}></MatchPerformanceTable>
                             <hr/>
                             <PlayerComparison team1Performances={team1Performances}
                                               team2Performances={team2Performances}

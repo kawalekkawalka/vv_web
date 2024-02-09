@@ -89,15 +89,15 @@ function TeamDetails() {
     }
 
     const handleDeleteTeam = () => {
-    deleteTeam(id, authData.token)
-        .then(res => {
-            console.log(res);
-            if (res.message === 'Successfully deleted') {
-                NotificationManager.success("Usunięto drużynę");
-                navigate("/user/teams");
-            }
-        });
-};
+        deleteTeam(id, authData.token)
+            .then(res => {
+                console.log(res);
+                if (res.message === 'Successfully deleted') {
+                    NotificationManager.success("Usunięto drużynę");
+                    navigate("/user/teams");
+                }
+            });
+    };
 
 
     if (error) return <h1>Error</h1>
