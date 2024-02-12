@@ -36,7 +36,7 @@ function Login() {
             if(regData){
                 const data = await auth({username, password});
                 setAuth(data);
-                navigate("/account");
+                navigate("/user/account");
                 NotificationManager.success("Twoje konto zostało pomyślnie utworzone");
             }
         }

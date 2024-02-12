@@ -19,6 +19,8 @@ import TeamInvitationsList from "./team-invitations-list";
 import {NotificationManager} from "react-notifications";
 import TeamPerformance from "../performance/team-performance";
 import PlayersIndividualPerformance from "../performance/players-individual-performance";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import IconButton from "@mui/material/IconButton";
 
 const useStyles = makeStyles({
     container: {
@@ -49,6 +51,7 @@ function TeamDetails() {
     const {id} = useParams();
     const [data, loading, error] = useFetchTeam(id);
     const [team, setTeam] = useState(null);
+    const [players, setPlayers] = useState('');
     const {authData} = useAuth()
     const [inTeam, setInTeam] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
@@ -62,6 +65,7 @@ function TeamDetails() {
 
     useEffect(() => {
         if (data?.players) {
+            setPlayers(data.players)
             if (authData?.user) {
                 setInTeam(!!data.players.find(player => player.id === authData.user.player.id));
                 setIsOwner(authData.user.id === data.owner);
@@ -99,6 +103,17 @@ function TeamDetails() {
             });
     };
 
+    const handleRemovePlayerFromTeam = (player) => {
+        leaveTeam({player: player, team: team.id}, authData.token).then(
+            res => {
+                console.log(res)
+            }
+        )
+        setPlayers((prevPlayers) => prevPlayers.filter((removedPlayer) =>
+                removedPlayer.id !== player))
+        NotificationManager.success("Usunięty z drużyny");
+    };
+
 
     if (error) return <h1>Error</h1>
     if (loading) return <h1>Loading...</h1>
@@ -112,8 +127,20 @@ function TeamDetails() {
                             <h1>{team.name} </h1><h2>{team.description}</h2>
                             <h2>Zawodnicy: </h2>
                             <div className={classes.container}>
-                                {team.players.map(player => (
-                                    <Player player={player} key={player.id}/>
+                                {players.map(player => (
+                                    <Box key={player.id} sx={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                    }}>
+                                        <Player player={player}/>
+                                        {isOwner &&
+                                            <IconButton aria-label="remove player"  sx={{ marginLeft: 'auto' }}
+                                                        onClick={() => handleRemovePlayerFromTeam(player.id)}>
+                                                <RemoveCircleIcon sx={{color: "white"}}/>
+                                            </IconButton>
+                                        }
+                                    </Box>
                                 ))}
                             </div>
                             <br/>
@@ -147,13 +174,14 @@ function TeamDetails() {
 
                                         </TabList>
                                     </Box>
-                                    <TabPanel value="1"><MatchesList params={{team: data.id, time: "past", amount: 5}}/></TabPanel>
+                                    <TabPanel value="1"><MatchesList
+                                        params={{team: data.id, time: "past", amount: 5}}/></TabPanel>
                                     <TabPanel value="2"><MatchesList
                                         params={{team: data.id, time: "future", amount: 5}}/></TabPanel>
                                     <TabPanel value="3"><TeamPerformance params={{team: team.id}}/></TabPanel>
                                     <TabPanel value="4">
                                         <PlayersIndividualPerformance params={{team: data.id}}
-                                                                      players={team.players}></PlayersIndividualPerformance>
+                                                                      players={players}></PlayersIndividualPerformance>
                                     </TabPanel>
                                     <TabPanel value="5"><TeamInvitationsList params={{team: data.id}}/></TabPanel>
                                 </TabContext>
@@ -167,7 +195,8 @@ function TeamDetails() {
                 </div>
             )}
         </div>
-    );
+    )
+        ;
 
 };
 
