@@ -9,6 +9,7 @@ import PlayerDetails from "../player/player-details";
 import PerformanceForm from "../performance/performance-form";
 import UserTeams from "../user/user-teams";
 import UserMatches from "../user/user-matches";
+import UserFriends from "../user/user-friends";
 function Main() {
 
   return (
@@ -23,6 +24,7 @@ function Main() {
           <Route exact path="/user/account" element={<Account/>}/>
           <Route exact path="/user/teams" element={<UserTeams/>}/>
           <Route exact path="/user/matches" element={<UserMatches/>}/>
+          <Route exact path="/user/friends" element={<UserFriends/>}/>
       </Routes>
 
   );

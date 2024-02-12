@@ -109,6 +109,9 @@ function Navbar() {
                 <MenuItem >
                   <Link to={'/user/matches'}>Mecze</Link>
                 </MenuItem>
+                <MenuItem >
+                  <Link to={'/user/friends'}>Znajomi</Link>
+                </MenuItem>
                 <MenuItem onClick={logout}>
                   <Typography textAlign="center">Wyloguj</Typography>
                 </MenuItem>

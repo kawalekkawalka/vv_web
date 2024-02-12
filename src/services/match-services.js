@@ -55,3 +55,11 @@ export function deleteMatch(id, token){
     })
         .then(status).catch( e => {console.log(e)})
 }
+
+export function getUserFriendsMatches(params){
+    const queryString = Object.keys(params)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        .join('&');
+    return fetch(`http://127.0.0.1:8000/api/matches/get_user_friends_matches/?${queryString}`)
+        .then(status).catch( e => {console.log(e)})
+}

@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {FilledInput, FormControl, InputAdornment, InputLabel, OutlinedInput} from "@mui/material";
+import React, {useState, } from "react";
+import {InputAdornment } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import Button from "@mui/material/Button";
@@ -21,7 +21,7 @@ function Login() {
         const data = await auth({username, password});
         setAuth(data);
         if(data){
-            navigate("/account");
+            navigate("/user/account");
         }else{
             NotificationManager.warning("Podałeś złe dane. Spróbuj ponownie");
         }
