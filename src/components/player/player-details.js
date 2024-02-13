@@ -99,16 +99,6 @@ function PlayerDetails() {
         ;
     };
 
-
-    // const handleLeaveTeam = () => {
-    //     leaveTeam({player: authData.user.player.id, team: team.id}, authData.token).then(
-    //         res => {
-    //             console.log(res)
-    //         }
-    //     )
-    //     NotificationManager.success("Opuszczono drużynę");
-    // }
-
     if (error) return <h1>Error</h1>
     if (loading) return <h1>Loading...</h1>
 
