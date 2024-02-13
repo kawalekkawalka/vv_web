@@ -6,7 +6,6 @@ import { NotificationManager } from "react-notifications";
 import { sendPerformance } from "../../services/performance-services";
 import { useAuth } from "../../hooks/useAuth";
 import { useFetchMatch } from "../../hooks/fetch-match";
-import Match from "../match/match";
 import MatchScoreForm from "../match/match-score-form";
 import MatchWithScore from "../match/match-with-score";
 
@@ -19,19 +18,15 @@ export default function PerformanceForm() {
 
   useEffect(() => {
     if(team1PerformanceData){
-      localStorage.setItem("team1PerformanceData", JSON.stringify(team1PerformanceData));
+      localStorage.setItem(`team1PerformanceData_${id}`, JSON.stringify(team1PerformanceData));
     }
   }, [team1PerformanceData]);
 
   useEffect(() => {
     if(team2PerformanceData){
-      localStorage.setItem("team2PerformanceData", JSON.stringify(team2PerformanceData));
+      localStorage.setItem(`team2PerformanceData_${id}`, JSON.stringify(team2PerformanceData));
     }
   }, [team2PerformanceData]);
-
-  useEffect( () => {
-    console.log('hejka stulejka')
-  }, [MatchScoreForm])
 
   const table1Data = (table1Data) => {
     setTeam1PerformanceData(table1Data);
@@ -54,12 +49,14 @@ export default function PerformanceForm() {
   };
 
   const handleDataSave = () => {
-    let teamPerformanceData = prepareData(team1PerformanceData || [], match.team1).concat(prepareData(team2PerformanceData || [], match.team2));
+    let teamPerformanceData = prepareData(team1PerformanceData || [], match.team1.id).concat(prepareData(team2PerformanceData || [], match.team2.id));
     if (teamPerformanceData.length > 0) {
       sendPerformance(teamPerformanceData, authData.token)
         .then(res => {
           console.log(res);
           NotificationManager.success("Statystyki wysłane");
+          localStorage.removeItem(`team1PerformanceData_${id}`);
+          localStorage.removeItem(`team2PerformanceData_${id}`);
         })
         .catch(error => {
           console.error(error);
@@ -83,13 +80,13 @@ export default function PerformanceForm() {
           <br/>
           <MatchPerformanceEditTable
               tableIndex={1}
-              teamId={match.team1}
+              teamId={match.team1.id}
               tableData={table1Data}
           ></MatchPerformanceEditTable>
           <br/>
           <MatchPerformanceEditTable
               tableIndex={2}
-              teamId={match.team2}
+              teamId={match.team2.id}
               tableData={table2Data}
           ></MatchPerformanceEditTable>
           <br />

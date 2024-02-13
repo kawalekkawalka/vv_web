@@ -4,8 +4,6 @@ import {useAuth} from "../../hooks/useAuth";
 import {makeStyles} from "@mui/styles";
 import Comments from "../comments/comments";
 import {useFetchMatch} from "../../hooks/fetch-match";
-import {DateTime} from "luxon";
-import {calculateSetResults} from "../../utils";
 import {useFetchPerformances} from "../../hooks/fetch-performances";
 import MatchPerformanceTable from "../tables/match-performance-table";
 import Player from "../player/player";
@@ -194,6 +192,12 @@ function MatchDetails() {
                                                    tableName={match.team1.name}></MatchPerformanceTable>
                             <MatchPerformanceTable performances={team2Performances}
                                                    tableName={match.team2.name}></MatchPerformanceTable>
+                            {isParticipant && match.time && new Date(match.time) < new Date() && (
+                                <Button href={`/details/match/edit/${match.id}`} color="primary" variant="contained">
+                                    Dodaj statystyki
+                                </Button>
+                            )
+                            }
                             <hr/>
                             <PlayerComparison team1Performances={team1Performances}
                                               team2Performances={team2Performances}
@@ -224,12 +228,6 @@ function MatchDetails() {
                             <h1>Brak statystyk dla tego spotkania</h1>
 
                         </div>
-                    )
-                    }
-                    {isParticipant && (
-                        <Button href={`/details/match/edit/${match.id}`} color="primary" variant="contained">
-                            Dodaj statystyki
-                        </Button>
                     )
                     }
                     <div>

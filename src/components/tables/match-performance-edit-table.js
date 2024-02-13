@@ -13,7 +13,7 @@ const tableTheme = createTheme({});
 
 export default function MatchPerformanceEditTable({tableIndex, teamId, tableData, onServerSynchronize}) {
     const {id} = useParams();
-    const [data, setData] = useState(JSON.parse(localStorage.getItem(`team${tableIndex}PerformanceData`)) || '')
+    const [data, setData] = useState(JSON.parse(localStorage.getItem(`team${tableIndex}PerformanceData_${id}`)) || '')
     const [team] = useFetchTeam(teamId);
 
     useEffect(() => {
@@ -493,6 +493,7 @@ export default function MatchPerformanceEditTable({tableIndex, teamId, tableData
                 forceTableRerender();
             }
         };
+
         return (
             <div style={{fontSize: '25px', fontWeight: 'bold'}}>
                 {team.name}
