@@ -10,11 +10,17 @@ import PerformanceForm from "../performance/performance-form";
 import UserTeams from "../user/user-teams";
 import UserMatches from "../user/user-matches";
 import UserFriends from "../user/user-friends";
+import MatchesList from "../match/matches-list";
+import MainPage from "./main-page";
+import PlayersList from "../player/players-list";
 function Main() {
 
   return (
       <Routes>
-          <Route exact path="/" element={<TeamList params={{}}/>}/>
+          <Route exact path="/" element={<MainPage/>}/>
+          <Route exact path="/teams" element={<TeamList params={{}}/>}/>
+          <Route exact path="/matches" element={<MatchesList params={{}}/>}/>
+          <Route exact path="/players" element={<PlayersList params={{}}/>}/>
           <Route exact path="/details/team/:id" element={<TeamDetails/>}/>
           <Route exact path="/details/player/:id" element={<PlayerDetails/>}/>
           <Route exact path="/details/match/:id" element={<MatchDetails/>}/>

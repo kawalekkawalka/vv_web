@@ -14,9 +14,6 @@ import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
 import {useAuth} from "../../hooks/useAuth";
 import {Link, useNavigate} from "react-router-dom";
 
-const pages = ['Ligi(not implemented)', 'Zespoły', 'Zawodnicy'];
-const settings = ['Statystyki', 'Zespoły'];
-
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -67,15 +64,24 @@ function Navbar() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
               <Button
-                key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <Link to={'/teams'}>Zespoły</Link>
               </Button>
-            ))}
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                <Link to={'/matches'}>Mecze</Link>
+              </Button>
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                <Link to={'/players'}>Zawodnicy</Link>
+              </Button>
           </Box>
             {authData ?
           <Box sx={{ flexGrow: 0 }}>

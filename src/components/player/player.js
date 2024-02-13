@@ -2,6 +2,7 @@ import Avatar from "@mui/material/Avatar";
 import PropTypes from "prop-types";
 import {makeStyles} from "@mui/styles";
 import {Link} from "react-router-dom";
+import Match from "../match/match";
 
 
 const useStyles = makeStyles({
@@ -17,15 +18,15 @@ const useStyles = makeStyles({
   },
 })
 
-export default function Player({player}) {
+export default function Player({player, big}) {
 
     const classes = useStyles();
 
     return (
         <Link to={`/details/player/${player.id}`} className={classes.container}>
             <Avatar className={classes.item} alt="avatar" src={"http://localhost:8000" + player.photo}
-            sx={{ width: 56, height: 56 }} variant="rounded"/>
-            <h4 >{player.name + " " + player.surname}</h4>
+            sx={{ width: big ? 100 : 56, height: big ? 100 : 56 }} variant="rounded"/>
+            <h4 style={{ fontSize: big ? '24px' : 'inherit', marginLeft: big ? '20px' : 'inherit' }}>{player.name + " " + player.surname}</h4>
         </Link>
     )
 }
@@ -33,3 +34,7 @@ export default function Player({player}) {
 Player.propTypes = {
     player : PropTypes.shape({}).isRequired
 }
+
+Player.defaultProps = {
+  big: false,
+};

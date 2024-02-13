@@ -169,7 +169,7 @@ function TeamDetails() {
                                             <Tab label="Statystyki zespołu" value="3"/>
                                             <Tab label="Statystyki indywidualne" value="4"/>
                                             {isOwner &&
-                                                <Tab label="Zarządzaj zespołem (owner)" value="5"/>
+                                                <Tab label="Prośby o dołączenie" value="5"/>
                                             }
 
                                         </TabList>
