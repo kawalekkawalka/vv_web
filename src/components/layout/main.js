@@ -32,7 +32,6 @@ function Main() {
           <Route exact path="/user/matches" element={<UserMatches/>}/>
           <Route exact path="/user/friends" element={<UserFriends/>}/>
       </Routes>
-
   );
 }
 

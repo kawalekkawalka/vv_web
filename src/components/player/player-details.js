@@ -30,13 +30,17 @@ const useStyles = makeStyles({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        height: '40%',
+        maxHeight: '40%',
+        overflow: 'auto'
     },
     leftSection: {
         flex: 1,
         width: '30%',
         borderRight: '2px solid white',
         alignItems: 'center',
+        minHeight: '700px',
+        maxHeight:'1000px',
+        overflow: 'auto'
     },
     rightSection: {
         flex: 2,
@@ -59,13 +63,13 @@ const positionMapping = {
 };
 
 function PlayerDetails() {
-
     const {id} = useParams();
     const [player, loading, error] = useFetchPlayer(id);
+    const [performances] = useFetchPerformances({player: id, amount: 10})
     const {authData} = useAuth()
     const classes = useStyles();
     const [tabValue, setTabValue] = useState("1");
-    const [performances] = useFetchPerformances({player: id, amount: 10})
+
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
     };
@@ -128,6 +132,8 @@ function PlayerDetails() {
                                 <Button color="primary" variant="contained" onClick={handleSendFriendInvitation}>Dodaj
                                     znajomego</Button>
                             }
+                            <br/>
+                            <br/>
                         </div>
                         {performances && (
                             <div className={classes.rightSection}>
@@ -138,22 +144,23 @@ function PlayerDetails() {
                                             <Tab label="Nadchodzące mecze" value="2"/>
                                             <Tab label="Rekordy" value="3"/>
                                             <Tab label="Zespoły" value="4"/>
-
                                         </TabList>
                                     </Box>
                                     <TabPanel value="1"><PlayerLastPerformancesTable
                                         performances={performances}
                                         tableName="Ostatnie występy zawodnika"/>
                                     </TabPanel>
-                                    <TabPanel value="2"><MatchesList params={{player: id, time: "future", amount: 5}}/></TabPanel>
+                                    <TabPanel value="2"><MatchesList
+                                        params={{player: id, time: "future", amount: 5}}/>
+                                    </TabPanel>
                                     <TabPanel value="3"><PlayerRecords/></TabPanel>
                                     <TabPanel value="4"><TeamList params={{player: id,}}/></TabPanel>
                                 </TabContext>
                             </div>
                         )}
                     </div>
-                    <div>
-                        <hr/>
+                    <div >
+                        <hr style={{marginTop:'0px'}}/>
                         <Comments comments={player.comments} objectId={player.id} contentType={'player'}/>
                     </div>
                 </div>

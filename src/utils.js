@@ -1,3 +1,5 @@
+export const API_URL = process.env.REACT_APP_API_URL;
+
 export function status(res) {
     if( res.ok){
         return res.json();

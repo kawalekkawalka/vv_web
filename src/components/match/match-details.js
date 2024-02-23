@@ -108,6 +108,18 @@ function findPerformanceWithMostBlocks(performances) {
     return highestScorePerformance;
 }
 
+function findPerformanceWithMostDigs(performances) {
+    if (!performances || performances.length === 0) {
+        return null;
+    }
+
+    const highestScorePerformance = performances.reduce((maxPerformance, currentPerformance) => {
+        return currentPerformance.dig > maxPerformance.dig ? currentPerformance : maxPerformance;
+    }, performances[0]);
+
+    return highestScorePerformance;
+}
+
 const PlayerComparison = ({team1Performances, team2Performances, findPerformanceFunc, statLabel, label}) => {
     const classes = useStyles();
 
@@ -118,11 +130,11 @@ const PlayerComparison = ({team1Performances, team2Performances, findPerformance
         <div className={classes.container}>
             <h2 className={classes.header}>{label}:</h2>
             <div className={classes.playersContainer}>
-                <Player player={performance1.player}/>
+                <Player player={performance1.player} big={true}/>
                 <span className={classes.totalScore}>{performance1[statLabel]}</span>
                 <span className={`${classes.header} ${classes.totalScore}`} style={{fontSize: '30px'}}>vs</span>
                 <span className={classes.totalScore}>{performance2[statLabel]}</span>
-                <Player player={performance2.player}/>
+                <Player player={performance2.player} big={true}/>
             </div>
         </div>
     );
@@ -192,12 +204,22 @@ function MatchDetails() {
                                                    tableName={match.team1.name}></MatchPerformanceTable>
                             <MatchPerformanceTable performances={team2Performances}
                                                    tableName={match.team2.name}></MatchPerformanceTable>
-                            {isParticipant && match.time && new Date(match.time) < new Date() && (
-                                <Button href={`/details/match/edit/${match.id}`} color="primary" variant="contained">
-                                    Dodaj statystyki
-                                </Button>
-                            )
-                            }
+                        </div>
+                    ) : (
+                        <div>
+                            <h1>Brak statystyk dla tego spotkania</h1>
+
+                        </div>
+                    )}
+                    {isParticipant && match.time && new Date(match.time) < new Date() && (
+                        <Button href={`/details/match/edit/${match.id}`} color="primary" variant="contained">
+                            Dodaj statystyki
+                        </Button>
+                    )
+                    }
+
+                    {team1Performances && team2Performances &&
+                        <div>
                             <hr/>
                             <PlayerComparison team1Performances={team1Performances}
                                               team2Performances={team2Performances}
@@ -222,16 +244,15 @@ function MatchDetails() {
                                               findPerformanceFunc={findPerformanceWithMostBlocks}
                                               label="Najwięcej bloków"
                                               statLabel="block_amount"/>
+                            <PlayerComparison team1Performances={team1Performances}
+                                              team2Performances={team2Performances}
+                                              findPerformanceFunc={findPerformanceWithMostDigs}
+                                              label="Najwięcej obron"
+                                              statLabel="dig"/>
                         </div>
-                    ) : (
-                        <div>
-                            <h1>Brak statystyk dla tego spotkania</h1>
-
-                        </div>
-                    )
                     }
                     <div>
-                        <hr/>
+                        <hr style={{marginTop:'0px'}}/>
                         <Comments comments={match.comments} objectId={match.id} contentType={'match'}/>
                     </div>
                 </div>

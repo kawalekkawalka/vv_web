@@ -38,6 +38,8 @@ function Login() {
                 setAuth(data);
                 navigate("/user/account");
                 NotificationManager.success("Twoje konto zostało pomyślnie utworzone");
+            }else{
+                NotificationManager.error("Podałeś złe dane. Rejestracja nie powiodła się");
             }
         }
     }

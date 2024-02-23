@@ -34,7 +34,7 @@ export default function UserFriendsMatchesList({params}) {
                             mb: '20px',
                         }}
                     >
-                        <Player player={data.player} sx={{flex: '0 0 auto'}}/>
+                        <Player player={data.player} sx={{flex: '0 0 auto'}} big={true}/>
                         <Box sx={{marginLeft: '20px', flex: '1 1 right'}}>
                             <Match match={data.match}/>
                         </Box>

@@ -248,7 +248,7 @@ const headCells = [
         id: 'positive_reception_percentage',
         numeric: true,
         disablePadding: false,
-        label: 'poz%',
+        label: 'poz',
     },
     {
         id: 'spike',
@@ -278,13 +278,13 @@ const headCells = [
         id: 'spike_kill_percentage',
         numeric: true,
         disablePadding: false,
-        label: 'skut%',
+        label: 'skut',
     },
     {
         id: 'spike_efficiency',
         numeric: true,
         disablePadding: false,
-        label: 'eff%',
+        label: 'eff',
     },
     {
         id: 'block_amount',
@@ -388,13 +388,13 @@ function TableSummary({rows}) {
             <TableCell align="right">{dataSummary.sumReception}</TableCell>
             <TableCell align="right">{dataSummary.sumPositiveReception}</TableCell>
             <TableCell align="right">{dataSummary.sumReceptionError}</TableCell>
-            <TableCell align="right">{dataSummary.avgPositiveReception}</TableCell>
+            <TableCell align="right">{dataSummary.avgPositiveReception}%</TableCell>
             <TableCell align="right">{dataSummary.sumSpike}</TableCell>
             <TableCell align="right">{dataSummary.sumSpikePoint}</TableCell>
             <TableCell align="right">{dataSummary.sumSpikeBlock}</TableCell>
             <TableCell align="right">{dataSummary.sumSpikeError}</TableCell>
-            <TableCell align="right">{dataSummary.avgSpikeKillPercentage}</TableCell>
-            <TableCell align="right">{dataSummary.avgSpikeEfficiency}</TableCell>
+            <TableCell align="right">{dataSummary.avgSpikeKillPercentage}%</TableCell>
+            <TableCell align="right">{dataSummary.avgSpikeEfficiency}%</TableCell>
             <TableCell align="right">{dataSummary.sumBlock}</TableCell>
             <TableCell align="right">{dataSummary.sumDig}</TableCell>
         </TableRow>
@@ -480,13 +480,13 @@ export default function MatchPerformanceTable({performances, tableName}) {
                                         <TableCell align="right">{row.reception}</TableCell>
                                         <TableCell align="right">{row.positive_reception}</TableCell>
                                         <TableCell align="right">{row.reception_error}</TableCell>
-                                        <TableCell align="right">{row.positive_reception_percentage}</TableCell>
+                                        <TableCell align="right">{row.positive_reception_percentage}%</TableCell>
                                         <TableCell align="right">{row.spike}</TableCell>
                                         <TableCell align="right">{row.spike_point}</TableCell>
                                         <TableCell align="right">{row.spike_block}</TableCell>
                                         <TableCell align="right">{row.spike_error}</TableCell>
-                                        <TableCell align="right">{row.spike_kill_percentage}</TableCell>
-                                        <TableCell align="right">{row.spike_efficiency}</TableCell>
+                                        <TableCell align="right">{row.spike_kill_percentage}%</TableCell>
+                                        <TableCell align="right">{row.spike_efficiency}%</TableCell>
                                         <TableCell align="right">{row.block_amount}</TableCell>
                                         <TableCell align="right">{row.dig}</TableCell>
                                         <TableCell align="right"></TableCell>

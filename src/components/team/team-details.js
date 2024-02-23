@@ -38,6 +38,9 @@ const useStyles = makeStyles({
         flex: 1,
         width: '30%',
         borderRight: '2px solid white',
+        minHeight: '700px',
+        maxHeight:'1000px',
+        overflow: 'auto'
     },
     rightSection: {
         flex: 2,
@@ -157,6 +160,7 @@ function TeamDetails() {
                                             zespołu</Button>
                                     ))
                             )}
+                            <br/><br/>
                         </div>
 
                         <div className={classes.rightSection}>
@@ -189,7 +193,7 @@ function TeamDetails() {
                         </div>
                     </div>
                     <div>
-                        <hr/>
+                        <hr style={{marginTop:'0px'}}/>
                         <Comments comments={team.comments} objectId={team.id} contentType={'team'}/>
                     </div>
                 </div>

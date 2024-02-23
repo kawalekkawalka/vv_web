@@ -41,7 +41,7 @@ export default function PlayerRecords() {
     if (loading) return <h1>Loading...</h1>
 
     return (
-        <div>
+        <div style={{maxHeight:'600px', overflow:'auto'}}>
             {records && records.length > 0 ? (
                 <Paper
                     elevation={3}
@@ -50,7 +50,7 @@ export default function PlayerRecords() {
                         margin: '20px',
                         backgroundColor: backgroundColor,
                         color: 'white',
-                        paddingTop: '30px'
+                        paddingTop: '30px',
                     }}
                 >
                     <Grid container spacing={3}>

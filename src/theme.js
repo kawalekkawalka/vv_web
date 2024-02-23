@@ -6,7 +6,6 @@ const theme = createTheme({
     palette: {
         primary: indigo,
         secondary: pink,
-        white: 'white'
     },
     components: {
         MuiInputLabel: {
