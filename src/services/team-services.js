@@ -1,20 +1,20 @@
-import {status} from "../utils";
+import {status, API_URL} from "../utils";
 
 export function getTeams(params){
     const queryString = Object.keys(params)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
         .join('&');
-    return fetch(`http://127.0.0.1:8000/api/teams/?${queryString}`)
+    return fetch(`${API_URL}/api/teams/?${queryString}`)
         .then(status).catch( e => {console.log(e)})
 }
 
 export function getTeam(id){
-    return fetch(`http://127.0.0.1:8000/api/teams/${id}/`)
+    return fetch(`${API_URL}/api/teams/${id}/`)
         .then(status).catch( e => {console.log(e)})
 }
 
 export function joinTeam(data, token){
-    return fetch(`http://127.0.0.1:8000/api/members/join/`, {
+    return fetch(`${API_URL}/api/members/join/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export function joinTeam(data, token){
 }
 
 export function leaveTeam(data, token){
-    return fetch(`http://127.0.0.1:8000/api/members/leave/`, {
+    return fetch(`${API_URL}/api/members/leave/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export function leaveTeam(data, token){
 }
 
 export function createTeam(data, token){
-    return fetch(`http://127.0.0.1:8000/api/teams/`, {
+    return fetch(`${API_URL}/api/teams/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export function createTeam(data, token){
 }
 
 export function deleteTeam(id, token){
-    return fetch(`http://127.0.0.1:8000/api/teams/${id}/`, {
+    return fetch(`${API_URL}/api/teams/${id}/`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -64,6 +64,6 @@ export function getTeamsNames(params){
     const queryString = Object.keys(params)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
         .join('&');
-    return fetch(`http://127.0.0.1:8000/api/teams/get_teams_names/?${queryString}`)
+    return fetch(`${API_URL}/api/teams/get_teams_names/?${queryString}`)
         .then(status).catch( e => {console.log(e)})
 }

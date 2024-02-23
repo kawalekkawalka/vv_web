@@ -10,6 +10,7 @@ import {FormSelect, FormTextField} from "../layout/elements";
 import MenuItem from "@mui/material/MenuItem";
 import {updatePlayer} from "../../services/player-services";
 import Box from "@mui/material/Box";
+import {API_URL} from "../../utils";
 
 function Account() {
 
@@ -62,8 +63,14 @@ function Account() {
     const uploadFile = async e => {
         e.preventDefault();
         const uploadData = new FormData();
-        uploadData.append('photo', photo, photo.name)
-        const playerData = await uploadAvatar(authData.user.player.id, uploadData, authData.token);
+        if (photo){
+            uploadData.append('photo', photo, photo.name)
+            const playerData = await uploadAvatar(authData.user.player.id, uploadData, authData.token);
+            if (playerData){
+                NotificationManager.success("Awatar został zmieniony");
+            }
+        }
+
     }
 
 
@@ -71,7 +78,7 @@ function Account() {
         <div>
             <React.Fragment>
                 <h1>Twoje dane {authData.user.username}</h1>
-                <img src={"http://localhost:8000" + authData.user.player.photo} alt="user photo" height="100"/>
+                <img src={API_URL + authData.user.player.photo} alt="user photo" height="100"/>
                 <hr/>
                 <p>Zmień swoje dane:</p>
                 <form onSubmit={handleUpdatePlayerData}>
@@ -114,6 +121,7 @@ function Account() {
                     <br/>
                     <br/>
                     <Button type="submit" variant="contained">Wrzuć zdjęcie</Button>
+                    <br/>
                 </form>
 
                 <hr/>

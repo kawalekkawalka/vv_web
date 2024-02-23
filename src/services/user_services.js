@@ -1,7 +1,7 @@
-import { status} from "../utils";
+import {status, API_URL} from "../utils";
 
 export function auth(credentials){
-    return fetch('http://localhost:8000/api/authenticate/', {
+    return fetch(`${API_URL}/api/authenticate/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -11,7 +11,7 @@ export function auth(credentials){
 }
 
 export function changePassword(userData, userId, token){
-    return fetch(`http://localhost:8000/api/users/${userId}/change_pass/`, {
+    return fetch(`${API_URL}/api/users/${userId}/change_pass/`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export function changePassword(userData, userId, token){
 }
 
 export function register(userData){
-    return fetch('http://localhost:8000/api/users/', {
+    return fetch(`${API_URL}/api/users/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -32,7 +32,7 @@ export function register(userData){
 }
 
 export function uploadAvatar(playerId, data, token){
-    return fetch(`http://localhost:8000/api/players/${playerId}/`, {
+    return fetch(`${API_URL}/api/players/${playerId}/`, {
         method: 'PUT',
         headers: {
             'Authorization': `Token ${token}`

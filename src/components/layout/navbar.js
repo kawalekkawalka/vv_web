@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
 import {useAuth} from "../../hooks/useAuth";
 import {Link, useNavigate} from "react-router-dom";
+import {API_URL} from "../../utils";
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -78,7 +79,7 @@ function Navbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Avatar" src={"http://localhost:8000" + authData.user.player.photo} />
+                <Avatar alt="Avatar" src={API_URL + authData.user.player.photo} />
               </IconButton>
             </Tooltip>
             <Menu

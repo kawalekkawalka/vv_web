@@ -19,6 +19,7 @@ import Button from "@mui/material/Button";
 import {NotificationManager} from "react-notifications";
 import {leaveTeam} from "../../services/team-services";
 import {sendFriendInvitation} from "../../services/user-friendship-invitations-services";
+import {API_URL} from "../../utils";
 
 const useStyles = makeStyles({
     container: {
@@ -118,7 +119,7 @@ function PlayerDetails() {
                                 <Avatar
                                     className={classes.item}
                                     alt="avatar"
-                                    src={player.photo}
+                                    src={API_URL + player.photo}
                                     sx={{width: 200, height: 200}}
                                     variant="rounded"
                                 />

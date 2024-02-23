@@ -1,7 +1,7 @@
-import {status} from "../utils";
+import {status, API_URL} from "../utils";
 
 export function sendFriendInvitation(data, token) {
-    return fetch(`http://127.0.0.1:8000/api/user-friendship-invitations/`, {
+    return fetch(`${API_URL}/api/user-friendship-invitations/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -17,12 +17,12 @@ export function getUserFriendsInvitations(params){
     const queryString = Object.keys(params)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
         .join('&');
-    return fetch(`http://127.0.0.1:8000/api/user-friendship-invitations/get_user_friends_invitations/?${queryString}`)
+    return fetch(`${API_URL}/api/user-friendship-invitations/get_user_friends_invitations/?${queryString}`)
         .then(status).catch( e => {console.log(e)})
 }
 
 export function deleteFriendInvitation(data, token) {
-    return fetch(`http://127.0.0.1:8000/api/user-friendship-invitations/delete_invitation/`, {
+    return fetch(`${API_URL}/api/user-friendship-invitations/delete_invitation/`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

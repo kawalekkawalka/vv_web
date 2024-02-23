@@ -1,7 +1,7 @@
-import {status} from "../utils";
+import {status, API_URL} from "../utils";
 
 export function sendTeamInvitation(data, token) {
-    return fetch(`http://127.0.0.1:8000/api/team-invitations/`, {
+    return fetch(`${API_URL}/api/team-invitations/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -17,12 +17,12 @@ export function getTeamInvitations(params){
     const queryString = Object.keys(params)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
         .join('&');
-    return fetch(`http://127.0.0.1:8000/api/team-invitations/?${queryString}`)
+    return fetch(`${API_URL}/api/team-invitations/?${queryString}`)
         .then(status).catch( e => {console.log(e)})
 }
 
 export function deleteTeamInvitation(id, token) {
-    return fetch(`http://127.0.0.1:8000/api/team-invitations/delete_invitation`, {
+    return fetch(`${API_URL}/api/team-invitations/delete_invitation`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

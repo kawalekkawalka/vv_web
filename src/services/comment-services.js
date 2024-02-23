@@ -1,7 +1,7 @@
-import {status} from "../utils";
+import {status, API_URL} from "../utils";
 
 export function sendComment(user, description, contentType, ObjectId, token) {
-    return fetch(`http://127.0.0.1:8000/api/comments/`, {
+    return fetch(`${API_URL}/api/comments/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -14,7 +14,7 @@ export function sendComment(user, description, contentType, ObjectId, token) {
 }
 
 export function deleteComment(id, token) {
-    return fetch(`http://127.0.0.1:8000/api/comments/delete_comment`, {
+    return fetch(`${API_URL}/api/comments/delete_comment`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
