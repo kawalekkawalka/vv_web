@@ -78,7 +78,7 @@ function Account() {
         <div>
             <React.Fragment>
                 <h1>Twoje dane {authData.user.username}</h1>
-                <img src={API_URL + authData.user.player.photo} alt="user photo" height="100"/>
+                <img src={API_URL + authData.user.player.photo_url} alt="user photo" height="100"/>
                 <hr/>
                 <p>Zmień swoje dane:</p>
                 <form onSubmit={handleUpdatePlayerData}>

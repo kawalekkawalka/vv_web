@@ -119,7 +119,7 @@ function PlayerDetails() {
                                 <Avatar
                                     className={classes.item}
                                     alt="avatar"
-                                    src={API_URL + player.photo}
+                                    src={API_URL + player.photo_url}
                                     sx={{width: 200, height: 200}}
                                     variant="rounded"
                                 />
